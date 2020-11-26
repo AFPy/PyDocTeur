@@ -1,13 +1,22 @@
 from flask import Flask, request
 import json
+from github import Github
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 application = Flask(__name__)
+
+gh = Github(os.getenv("GH_TOKEN"))
 
 
 @application.route('/', methods=['POST'])
 def process_incoming_payload():
     payload = json.loads(request.data)
-    action = payload["action"]
+    try:
+        action = payload["action"]
+    except KeyError:
+        return "OK", 200
     if action == "unlabeled":
         label_name = payload["label"]["name"]
         sender = payload["sender"]["login"]
@@ -58,6 +67,10 @@ def process_incoming_payload():
         pr_number = payload["pull_request"]["number"]
         user = payload["pull_request"]["user"]["login"]
         print(f"PR #{pr_number} was edited by {user}: {payload['changes']}")
+    elif action == "opened":
+        pr_number = payload["pull_request"]["number"]
+        user = payload["pull_request"]["user"]["login"]
+        print(f"PR #{pr_number} was opened by {user}")
     else:
         print(f"Unknown action {action}: \n\n\n\n{request.data}\n\n\n\n")
     return "OK", 200
