@@ -16,6 +16,7 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 [Source code](https://github.com/afpy/pydocteur)
 
+(state: {state})
 </details>
 """
 
@@ -30,28 +31,20 @@ def replace_body_variables(pr: PullRequest, body: str):
     return new_body
 
 
-def do_nothing():
-    return
-
-
-def comment_pr(pr: PullRequest, body_request: str):
+def comment_pr(pr: PullRequest, state: str):
     print("Getting comment bodies choices")
-    bodies = get_comment_bodies(body_request)
-
-    # Find if last message sent is the same
-    comments_list = [comment.body for comment in pr.get_issue_comments()]
-    for b in bodies:
-        if any(b in item for item in comments_list):
-            print("Last message is the same as the current one. returning")
-            return
+    bodies = get_comment_bodies(state)
+    if not bodies:
+        print("No comment for state", state)
+        return
     print("Choosing body")
     body = random.choice(bodies)
-
     # TODO: Add replacement of variables from selected body
     body = replace_body_variables(pr, body)
-    pr.create_issue_comment(body + END_OF_BODY)
+    pr.create_issue_comment(body + END_OF_BODY.format(state=state))
 
 
-def merge_and_thanks(pr: PullRequest):
+def merge_and_thanks(pr: PullRequest, state: str):
     # TODO: Add label and message before doing anything to warn that it is being merged
+    # Don't forgot to add the state in the comment :p
     pass
