@@ -11,6 +11,11 @@ END_OF_BODY = """
 <details>
   <summary>Disclaimer</summary>
 
+Je suis un robot fait par l'équipe de [l'AFPy et de Traduction](https://github.com/AFPy/PyDocTeur/graphs/contributors)
+sur leur temps libre. Je risque de dire des bétises. Ne me blâmez pas, blamez les développeurs.
+
+[Code source](https://github.com/afpy/pydocteur)
+
 I'm a bot made by the [Translation and AFPy teams](https://github.com/AFPy/PyDocTeur/graphs/contributors) on their free
 time. I might say or do dumb things sometimes. Don't blame me, blame the developer !
 
