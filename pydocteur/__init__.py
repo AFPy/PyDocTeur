@@ -11,7 +11,6 @@ from pydocteur.utils.pr_status import are_labels_set
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
-from pydocteur.utils.state_actions import do_nothing
 
 
 load_dotenv()
@@ -43,10 +42,7 @@ def process_incoming_payload():
         # |   approved
         # |   |  ci ok
         # /   /  /  donotmerge
-        (0, 0, 0, 0): do_nothing,
-        (0, 0, 0, 1): do_nothing,
         (0, 0, 1, 0): partial(comment_pr, pr, "ciok_missing_automerge_and_approval"),
-        (0, 0, 1, 1): do_nothing,
         (0, 1, 0, 0): partial(comment_pr, pr, "approved_missing_automerge_and_ci"),
         (0, 1, 0, 1): partial(comment_pr, pr, "approved_donotmerge"),
         (0, 1, 1, 0): partial(comment_pr, pr, "approved_ciok_missing_automerge"),
@@ -60,5 +56,5 @@ def process_incoming_payload():
         (1, 1, 1, 0): partial(comment_pr, pr, "merge_and_thanks"),
         (1, 1, 1, 1): partial(comment_pr, pr, "automerge_donotmerge"),
     }
-    big_dict[state]()
+    big_dict.get(state, lambda: None)()
     return "OK", 200
