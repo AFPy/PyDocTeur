@@ -1,54 +1,41 @@
 {
   "donotmerge": [
-    "C'est noté, celle là, je n'y touche pas."
+    "C'est noté, celle là, je n'y touche pas.",
+    "`DO NOT MERGE` ? OK je n'y touche même pas avec un bâton !"
   ],
   "testok": [
-    "Yay ! Quelqu'un pour review et automerge ?",
-    "Il me faut une review et un AUTOMERGE et c'est fini !"
-  ],
-  "testok_donotmerge": [
-        "C'est noté, celle là, je n'y touche pas."
+    "Les tests passent \\o/ Bravo et merci @$AUTHOR ! Est-ce qu'un relecteur peut me relire ça ? CC @$REVIEWERS (et j'ai rien contre un petit label `automerge`)"
   ],
   "approved": [
-    "Et le label automerge alors ? Comment je fais moi pour merger sans le label !?",
-    "Parfait ! un automerge et une CI qui passe et on est bons !"
-  ],
-  "approved_donotmerge": [
-    "Approuvé et DONOTMERGE en même temps ? On fait quoi les @$REVIEWERS",
-    "Décidez vous ! On approve et on DONOTMERGE !? @$REVIEWERS"
+    "Donc, il y a quelqu'un ici qui dégaine le `approuve` plus vite que les tests ne passent…",
+    "Tu viens de relire plus vite que les tests, mais t'as oublié le label `automerge`.",
+    "Tellement rapide l'approve ! Un petit label `automerge`, j'attend les tests, et on est bons !"
   ],
   "approved_testok": [
-    "Pas mal ! Ça manque d'un label automerge, mais c'est pas mal :)",
-    "ON Y EST PRESQUE ! Un  ptit label et je merge ça !",
-    "Rajoutez moi un automerge et ca pars en prod !"
-  ],
-  "approved_testok_donotmerge": [
-    "Schizophrène, schizophrène, tu vas trop vite ! (label DONOTMERGE et automerge en même temps #lol)",
-    "DONOTMERGE ou automerge ? Je sais pas quoi faire la ! cc @$REVIEWERS",
-    "Décidez vous les gars, DONOTMERGE ou automerge ?"
+    "C'est bien parti ! Ça manque d'un label `automerge` ?",
+    "ON Y EST PRESQUE ! Un p'tit label `automerge` et je merge ça !",
+    "Rajoutez moi un `automerge` et ca part en prod !"
   ],
   "automerge": [
-    "C'est noté."
+    "Je mergerai cette PR dès que les tests passeront et qu'elle sera approuvée."
   ],
   "automerge_donotmerge": [
-    "Schizophrène, schizophrène, tu vas trop vite ! (label DONOTMERGE et automerge en même temps #lol)"
+    "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire la !",
+    "Décidez vous les gars, `DO NOT MERGE` ou `automerge` ?"
+
   ],
   "automerge_testok": [
-    "Y'a-il un humain dans le coin pour review ?",
-    "Plus que la review de manquante, et si c'est bon ca pars !"
-  ],
-  "automerge_testok_donotmerge": [
-    "DONOTMERGE ou automerge ? Je sais pas quoi faire la ! cc @$REVIEWERS"
+    "Y'a-il un humain dans le coin pour relire ? CC @$REVIEWERS",
+    "Plus que la relecture, et si c'est bon je merge !"
   ],
   "automerge_approved": [
-    "Dès que la CI passe, je merge ! Merci @$AUTHOR @$REVIEWERS !",
+    "Dès que les tests passent, je merge ! Merci @$AUTHOR @$REVIEWERS !",
     "Si la CI passe, on merge ! Merci @$AUTHOR pour la PR et @$REVIEWERS pour les reviews !"
   ],
-  "automerge_approved_donotmerge": [
-    "Décidez vous les gars, DONOTMERGE ou automerge ?"
+  "automerge_approved_testok": [
+    "Hop, je m'occupe de merger ça, merci à tous !"
   ],
-  "automerge_approved_testok": [],
-  "automerge_approved_testok_donotmerge": [
-    "Label DONOTMERGE et automerge en même temps #lol…"
+  "automerge_approved_testok-done": [
+    "Et c'est mergé ! Merci @$AUTHOR pour cette belle PR !"
   ]
 }
