@@ -10,6 +10,7 @@ from pydocteur.utils.pr_status import get_checks_statuses_conclusions
 from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
+from pydocteur.utils.state_actions import merge_and_thank_contributors
 
 
 load_dotenv()
@@ -41,7 +42,7 @@ def process_incoming_payload():
     if payload["sender"]["login"] == "PyDocTeur":
         return "OK", 200
     pr = get_pull_request(payload)
-    if not pr:
+    if not pr or pr.is_merged():
         return "OK", 200
 
     state = state_name(
@@ -55,7 +56,8 @@ def process_incoming_payload():
         print("State has not changed, ignoring event.")
         return "OK", 200
     state_dict = {
-        "automerge_approved": comment_pr
+        "automerge_approved": comment_pr,
+        "automerge_approved_testok": merge_and_thank_contributors
         # ...
     }
     state_dict.get(state, comment_pr)(state=state, pr=pr)
