@@ -51,14 +51,19 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     warnings = bodies["warnings"]
     thanks = bodies["thanks"]
 
+    print("MERGING: Sending warning")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
     pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state))
 
-    time.sleep(5)
+    print("MERGING: Sleeping 1s")
+    time.sleep(1)
 
-    pr.merge(merge_method="squash", commit_message=None)
+    print("MERGING: MERGING")
+    # TODO: Custom commit message/title with nice infos and saying it's auto merged.
+    pr.merge(merge_method="squash", commit_message="")
 
+    print("MERGING: Sending thanks")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
     pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state))
