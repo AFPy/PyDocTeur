@@ -45,7 +45,7 @@ def process_incoming_payload():
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and state in my_comments[-1]:
         print("State has not changed, ignoring event.")
-        return
+        return "OK", 200
     state_dict = {
         "automerge_approved": comment_pr
         # ...
