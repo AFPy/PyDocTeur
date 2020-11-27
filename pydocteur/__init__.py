@@ -41,6 +41,16 @@ def process_incoming_payload():
     payload = json.loads(request.data)
     if payload["sender"]["login"] == "PyDocTeur":
         return "OK", 200
+
+    # If pull request just got opened
+    try:
+        payload["action"] == "opened"
+        payload["pull_request"]["number"]
+    except KeyError:
+        pass
+    else:
+        return "OK", 200
+
     pr = get_pull_request(payload)
     if not pr or pr.is_merged():
         return "OK", 200
