@@ -43,7 +43,7 @@ def process_incoming_payload():
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
     )
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
-    if my_comments and state in my_comments[-1]:
+    if my_comments and f"(state: {state})" in my_comments[-1]:
         print("State has not changed, ignoring event.")
         return "OK", 200
     state_dict = {

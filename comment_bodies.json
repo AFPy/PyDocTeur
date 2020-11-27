@@ -3,10 +3,12 @@
     "C'est noté, celle là, je n'y touche pas."
   ],
   "testok": [
-    "Yay ! Quelqu'un pour review ?",
+    "Yay ! Quelqu'un pour review et automerge ?",
     "Il me faut une review et un AUTOMERGE et c'est fini !"
   ],
-  "testok_donotmerge": [],
+  "testok_donotmerge": [
+        "C'est noté, celle là, je n'y touche pas."
+  ],
   "approved": [
     "Et le label automerge alors ? Comment je fais moi pour merger sans le label !?",
     "Parfait ! un automerge et une CI qui passe et on est bons !"
