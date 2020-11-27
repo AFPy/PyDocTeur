@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 
 
@@ -5,6 +7,10 @@ def get_checks_statuses_conclusions(pr):
     commits_sha = [commit.sha for commit in pr.get_commits()]
     last_sha = commits_sha[-1]
     resp = requests.get(f"https://api.github.com/repos/pydocteur/fake-docs/commits/{last_sha}/check-runs")
+    if resp.status_code == 403:
+        reset_ts = resp.headers.get("X-Ratelimit-Reset")
+        while datetime.datetime.utcnow().timestamp() < int(reset_ts):
+            continue
     runs = resp.json()["check_runs"]
     statuses = [run["status"] for run in runs if run["name"] != "check-title"]
     conclusions = [run["conclusion"] for run in runs if run["name"] != "check-title"]
