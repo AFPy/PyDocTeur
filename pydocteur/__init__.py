@@ -56,8 +56,7 @@ def process_incoming_payload():
         print("State has not changed, ignoring event.")
         return "OK", 200
     state_dict = {
-        "automerge_approved": comment_pr,
-        "automerge_approved_testok": merge_and_thank_contributors
+        "automerge_approved_testok": merge_and_thank_contributors,
         # ...
     }
     state_dict.get(state, comment_pr)(state=state, pr=pr)
