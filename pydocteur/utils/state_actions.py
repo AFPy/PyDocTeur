@@ -1,9 +1,9 @@
 import random
+import time
 
 from github import PullRequest
 
 from pydocteur.utils.comment_body import get_comment_bodies
-
 
 END_OF_BODY = """
 
@@ -46,7 +46,23 @@ def comment_pr(pr: PullRequest, state: str):
     pr.create_issue_comment(body + END_OF_BODY.format(state=state))
 
 
-def merge_and_thanks(pr: PullRequest, state: str):
-    # TODO: Add label and message before doing anything to warn that it is being merged
-    # Don't forgot to add the state in the comment :p
-    pass
+def merge_and_thank_contributors(pr: PullRequest, state: str):
+    warnings = get_comment_bodies("automerge_approved_testok")
+    thanks = get_comment_bodies("automerge_approved_testok-done")
+
+    print("MERGING: Sending warning")
+    warning_body = random.choice(warnings)
+    warning_body = replace_body_variables(pr, warning_body)
+    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state))
+
+    print("MERGING: Sleeping 1s")
+    time.sleep(1)
+
+    print("MERGING: MERGING")
+    # TODO: Custom commit message/title with nice infos and saying it's auto merged.
+    pr.merge(merge_method="squash", commit_message="")
+
+    print("MERGING: Sending thanks")
+    thanks_body = random.choice(thanks)
+    thanks_body = replace_body_variables(pr, thanks_body)
+    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state))
