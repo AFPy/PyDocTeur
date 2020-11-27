@@ -8,7 +8,12 @@ def get_checks_statuses_conclusions(pr):
     runs = resp.json()["check_runs"]
     statuses = [run["status"] for run in runs]
     conclusions = [run["conclusion"] for run in runs]
-    return statuses, conclusions
+    are_all_checks_done = all(status == "completed" for status in statuses)
+    if are_all_checks_done:
+        is_ci_success = all(conclusion == "success" for conclusion in conclusions)
+    else:
+        is_ci_success = False
+    return is_ci_success
 
 
 def are_labels_set(pr):
