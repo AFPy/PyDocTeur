@@ -1,13 +1,12 @@
 import json
 import os
-from functools import partial
 
 from dotenv import load_dotenv
 from flask import Flask
 from flask import request
 
 from pydocteur.utils.get_pr import get_pull_request
-from pydocteur.utils.pr_status import are_labels_set
+from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
@@ -37,10 +36,12 @@ def process_incoming_payload():
     if not pr:
         return "OK", 200
 
-    is_automerge, is_donotmerge = are_labels_set(pr)
-    is_ci_success = get_checks_statuses_conclusions(pr)
-    is_approved = is_pr_approved(pr)
-    state = state_name(automerge=is_automerge, approved=is_approved, testok=is_ci_success, donotmerge=is_donotmerge)
+    state = state_name(
+        automerge=is_label_set(pr, "🤖 automerge"),
+        approved=is_pr_approved(pr),
+        testok=get_checks_statuses_conclusions(pr),
+        donotmerge=is_label_set(pr, "DO NOT MERGE"),
+    )
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and state in my_comments[-1]:
         print("State has not changed, ignoring event.")

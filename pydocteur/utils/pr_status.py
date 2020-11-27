@@ -16,16 +16,8 @@ def get_checks_statuses_conclusions(pr):
     return is_ci_success
 
 
-def are_labels_set(pr):
-    pr_labels = pr.get_labels()
-    label_names = [label.name for label in pr_labels]
-    is_automerge_set = False
-    is_donotmerge_set = False
-    if "🤖 automerge" in label_names:
-        is_automerge_set = True
-    if "DO NOT MERGE" in label_names:
-        is_donotmerge_set = True
-    return is_automerge_set, is_donotmerge_set
+def is_label_set(pr, label: str):
+    return label in {label.name for label in pr.get_labels()}
 
 
 def is_pr_approved(pr):
