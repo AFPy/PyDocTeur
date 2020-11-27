@@ -6,8 +6,8 @@ def get_checks_statuses_conclusions(pr):
     last_sha = commits_sha[-1]
     resp = requests.get(f"https://api.github.com/repos/pydocteur/fake-docs/commits/{last_sha}/check-runs")
     runs = resp.json()["check_runs"]
-    statuses = [run["status"] for run in runs]
-    conclusions = [run["conclusion"] for run in runs]
+    statuses = [run["status"] for run in runs if run["name"] != "check-title"]
+    conclusions = [run["conclusion"] for run in runs if run["name"] != "check-title"]
     are_all_checks_done = all(status == "completed" for status in statuses)
     if are_all_checks_done:
         is_ci_success = all(conclusion == "success" for conclusion in conclusions)
