@@ -31,22 +31,17 @@ def replace_body_variables(pr: PullRequest, body: str):
     return new_body
 
 
-def comment_pr(pr: PullRequest, body_request: str):
+def comment_pr(pr: PullRequest, state_name: str):
     print("Getting comment bodies choices")
-    bodies = get_comment_bodies(body_request)
-
-    # Find if last message sent is the same
-    last_comment = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
-    if last_comment and body_request in last_comment[-1]:
-        print("State has not changed since last time, do not flood.")
-        return
+    bodies = get_comment_bodies(state_name)
     print("Choosing body")
     body = random.choice(bodies)
     # TODO: Add replacement of variables from selected body
     body = replace_body_variables(pr, body)
-    pr.create_issue_comment(body + END_OF_BODY.format(last_state=body_request)
+    pr.create_issue_comment(body + END_OF_BODY.format(last_state=state_name))
 
 
-def merge_and_thanks(pr: PullRequest):
+def merge_and_thanks(pr: PullRequest, state_name: str):
     # TODO: Add label and message before doing anything to warn that it is being merged
+    # Don't forgot to add the state_name in the comment :p
     pass
