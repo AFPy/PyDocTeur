@@ -47,9 +47,8 @@ def comment_pr(pr: PullRequest, state: str):
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
-    bodies = get_comment_bodies(state)
-    warnings = bodies["warnings"]
-    thanks = bodies["thanks"]
+    warnings = get_comment_bodies("automerge_approved_testok")
+    thanks = get_comment_bodies("automerge_approved_testok-done")
 
     print("MERGING: Sending warning")
     warning_body = random.choice(warnings)
