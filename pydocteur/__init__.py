@@ -24,7 +24,15 @@ application = Flask(__name__)
 
 
 def state_name(**kwargs):
-    return "_".join(key for key, value in kwargs.items() if value)
+    SIMPLIFICATIONS = {
+        "testok_donotmerge": "donotmerge",
+        "approved_testok_donotmerge": "donotmerge",
+        "automerge_testok_donotmerge": "automerge_donotmerge",
+        "automerge_approved_donotmerge": "automerge_donotmerge",
+        "automerge_approved_testok_donotmerge": "automerge_donotmerge",
+    }
+    state = "_".join(key for key, value in kwargs.items() if value)
+    return SIMPLIFICATIONS.get(state, state)
 
 
 @application.route("/", methods=["POST"])
