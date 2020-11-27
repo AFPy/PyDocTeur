@@ -9,16 +9,8 @@ from pydocteur.utils.get_pr import get_pull_request
 from pydocteur.utils.pr_status import are_labels_set
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
 from pydocteur.utils.pr_status import is_pr_approved
-from pydocteur.utils.state_actions import all_good_just_missing_review
-from pydocteur.utils.state_actions import approved_ciok_missing_automerge
-from pydocteur.utils.state_actions import approved_donotmerge
-from pydocteur.utils.state_actions import approved_missing_automerge_and_ci
-from pydocteur.utils.state_actions import automerge_donotmerge
-from pydocteur.utils.state_actions import ciok_missing_automerge_and_approval
+from pydocteur.utils.state_actions import comment_pr
 from pydocteur.utils.state_actions import do_nothing
-from pydocteur.utils.state_actions import merge_and_thanks
-from pydocteur.utils.state_actions import merge_when_ci_ok
-from pydocteur.utils.state_actions import only_automerge
 
 
 load_dotenv()
@@ -55,22 +47,22 @@ def process_incoming_payload():
         #      approved
         #              ci ok
         #                     donotmerge
-        "0000": do_nothing,
-        "0001": do_nothing,
-        "0010": ciok_missing_automerge_and_approval,
-        "0011": do_nothing,
-        "0100": approved_missing_automerge_and_ci,
-        "0101": approved_donotmerge,
-        "0110": approved_ciok_missing_automerge,
-        "0111": approved_donotmerge,
-        "1000": only_automerge,
-        "1001": automerge_donotmerge,
-        "1010": all_good_just_missing_review,
-        "1011": automerge_donotmerge,
-        "1100": merge_when_ci_ok,
-        "1101": automerge_donotmerge,
-        "1110": merge_and_thanks,
-        "1111": automerge_donotmerge,
+        "0000": [do_nothing, ""],
+        "0001": [do_nothing, ""],
+        "0010": [comment_pr, "ciok_missing_automerge_and_approval"],
+        "0011": [do_nothing, ""],
+        "0100": [comment_pr, "approved_missing_automerge_and_ci"],
+        "0101": [comment_pr, "approved_donotmerge"],
+        "0110": [comment_pr, "approved_ciok_missing_automerge"],
+        "0111": [comment_pr, "approved_donotmerge"],
+        "1000": [comment_pr, "only_automerge"],
+        "1001": [comment_pr, "automerge_donotmerge"],
+        "1010": [comment_pr, "all_good_just_missing_review"],
+        "1011": [comment_pr, "automerge_donotmerge"],
+        "1100": [comment_pr, "merge_when_ci_ok"],
+        "1101": [comment_pr, "automerge_donotmerge"],
+        "1110": [comment_pr, "merge_and_thanks"],
+        "1111": [comment_pr, "automerge_donotmerge"],
     }
-    big_dict[str_state](pr)
+    big_dict[str_state][0](pr, big_dict[str_state][1])
     return "OK", 200

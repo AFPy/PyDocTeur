@@ -1,11 +1,36 @@
 {
   "automerge_donotmerge": [
     "Schizophrène, schizophrène, tu vas trop vite ! (label DONOTMERGE et automerge en même temps #lol)",
-    "DONOTMERGE ou automerge ? Je sais pas quoi faire la",
+    "DONOTMERGE ou automerge ? Je sais pas quoi faire la ! cc @$REVIEWERS",
     "Décidez vous les gars, DONOTMERGE ou automerge ?"
   ],
   "approved_donotmerge": [
-    "Approuvé et DONOTMERGE en même temps ? On fait quoi ?",
-    "Décidez vous ! On approve et on DONOTMERGE !?"
+    "Approuvé et DONOTMERGE en même temps ? On fait quoi les @$REVIEWERS",
+    "Décidez vous ! On approve et on DONOTMERGE !? @$REVIEWERS"
+  ],
+  "ciok_missing_automerge_and_approval": [
+    "Yay ! Quelqu'un pour review ?",
+    "Il me faut une review et un AUTOMERGE et c'est fini !"
+  ],
+  "approved_missing_automerge_and_ci": [
+    "Et le label automerge alors ? Comment je fais moi pour merger sans le label !?",
+    "Parfait ! un automerge et une CI qui passe et on est bons !"
+  ],
+  "approved_ciok_missing_automerge": [
+    "Pas mal ! Ça manque d'un label automerge, mais c'est pas mal :)",
+    "ON Y EST PRESQUE ! Un  ptit label et je merge ça !",
+    "Rajoutez moi un automerge et ca pars en prod !"
+  ],
+  "all_good_just_missing_review": [
+    "Y'a-il un humain dans le coin pour review ?",
+    "Plus que la review de manquante, et si c'est bon ca pars !"
+  ],
+  "merge_when_ci_ok": [
+    "Dès que la CI passe, je merge ! Merci @$AUTHOR @$REVIEWERS !",
+    "Si la CI passe, on merge ! Merci @$AUTHOR pour la PR et @$REVIEWERS pour les reviews !"
+  ],
+  "only_automerge": [
+    "@$REVIEWERS rajoutez moi le label automerge et ca pars !!"
   ]
+
 }
