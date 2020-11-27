@@ -6,8 +6,8 @@ from flask import Flask
 from flask import request
 
 from pydocteur.utils.get_pr import get_pull_request
-from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
+from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
 
@@ -46,9 +46,9 @@ def process_incoming_payload():
     if my_comments and state in my_comments[-1]:
         print("State has not changed, ignoring event.")
         return
-    big_dict = {
+    state_dict = {
         "automerge_approved": comment_pr
         # ...
     }
-    big_dict.get(state, comment_pr)(state=state, pr=pr)
+    state_dict.get(state, comment_pr)(state=state, pr=pr)
     return "OK", 200
