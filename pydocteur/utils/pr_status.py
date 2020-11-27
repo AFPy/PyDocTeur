@@ -21,9 +21,8 @@ def is_label_set(pr, label: str):
 
 
 def is_pr_approved(pr):
-    # TODO: Maybe finer getting of approvals for better control, maybe all reviews don't need to be ok, just one
     pr_reviews = pr.get_reviews()
     if pr_reviews.totalCount == 0:
         return False
-    is_approved = all(review.state == "APPROVED" for review in pr_reviews)
+    is_approved = any(review.state == "APPROVED" for review in pr_reviews)
     return is_approved
