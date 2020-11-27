@@ -1,0 +1,4 @@
+flake8
+black
+reorder-python-imports
+pre-commit
