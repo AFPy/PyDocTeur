@@ -30,7 +30,7 @@ def replace_body_variables(pr: PullRequest, body: str):
     return new_body
 
 
-def do_nothing(pr: PullRequest, body_request: str):
+def do_nothing():
     return
 
 

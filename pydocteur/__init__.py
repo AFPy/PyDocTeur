@@ -1,3 +1,4 @@
+from functools import partial
 import json
 import os
 
@@ -36,33 +37,28 @@ def process_incoming_payload():
     is_automerge_set, is_donotmerge_set = are_labels_set(pr)
     is_ci_success = get_checks_statuses_conclusions(pr)
     is_approved = is_pr_approved(pr)
-    state = [is_automerge_set, is_approved, is_ci_success, is_donotmerge_set]
-
-    state_map = map(int, state)
-
-    state_ints_list = list(state_map)
-    str_state = "".join(str(n) for n in state_ints_list)
+    state = (is_automerge_set, is_approved, is_ci_success, is_donotmerge_set)
     big_dict = {
         # automerge
-        #      approved
-        #              ci ok
-        #                     donotmerge
-        "0000": [do_nothing, ""],
-        "0001": [do_nothing, ""],
-        "0010": [comment_pr, "ciok_missing_automerge_and_approval"],
-        "0011": [do_nothing, ""],
-        "0100": [comment_pr, "approved_missing_automerge_and_ci"],
-        "0101": [comment_pr, "approved_donotmerge"],
-        "0110": [comment_pr, "approved_ciok_missing_automerge"],
-        "0111": [comment_pr, "approved_donotmerge"],
-        "1000": [comment_pr, "only_automerge"],
-        "1001": [comment_pr, "automerge_donotmerge"],
-        "1010": [comment_pr, "all_good_just_missing_review"],
-        "1011": [comment_pr, "automerge_donotmerge"],
-        "1100": [comment_pr, "merge_when_ci_ok"],
-        "1101": [comment_pr, "automerge_donotmerge"],
-        "1110": [comment_pr, "merge_and_thanks"],
-        "1111": [comment_pr, "automerge_donotmerge"],
+        # |   approved
+        # |   |  ci ok
+        # /   /  /  donotmerge
+        (0, 0, 0, 0): do_nothing
+        (0, 0, 0, 1): do_nothing
+        (0, 0, 1, 0): partial(comment_pr, pr, "ciok_missing_automerge_and_approval"),
+        (0, 0, 1, 1): do_nothing,
+        (0, 1, 0, 0): partial(comment_pr, pr, "approved_missing_automerge_and_ci"),
+        (0, 1, 0, 1): partial(comment_pr, pr, "approved_donotmerge"),
+        (0, 1, 1, 0): partial(comment_pr, pr, "approved_ciok_missing_automerge"),
+        (0, 1, 1, 1): partial(comment_pr, pr, "approved_donotmerge"),
+        (1, 0, 0, 0): partial(comment_pr, pr, "only_automerge"),
+        (1, 0, 0, 1): partial(comment_pr, pr, "automerge_donotmerge"),
+        (1, 0, 1, 0): partial(comment_pr, pr, "all_good_just_missing_review"),
+        (1, 0, 1, 1): partial(comment_pr, pr, "automerge_donotmerge"),
+        (1, 1, 0, 0): partial(comment_pr, pr, "merge_when_ci_ok"),
+        (1, 1, 0, 1): partial(comment_pr, pr, "automerge_donotmerge"),
+        (1, 1, 1, 0): partial(comment_pr, pr, "merge_and_thanks"),
+        (1, 1, 1, 1): partial(comment_pr, pr, "automerge_donotmerge"),
     }
-    big_dict[str_state][0](pr, big_dict[str_state][1])
+    big_dict[state]()
     return "OK", 200
