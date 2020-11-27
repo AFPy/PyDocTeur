@@ -1,6 +1,6 @@
-from functools import partial
 import json
 import os
+from functools import partial
 
 from dotenv import load_dotenv
 from flask import Flask
@@ -43,8 +43,8 @@ def process_incoming_payload():
         # |   approved
         # |   |  ci ok
         # /   /  /  donotmerge
-        (0, 0, 0, 0): do_nothing
-        (0, 0, 0, 1): do_nothing
+        (0, 0, 0, 0): do_nothing,
+        (0, 0, 0, 1): do_nothing,
         (0, 0, 1, 0): partial(comment_pr, pr, "ciok_missing_automerge_and_approval"),
         (0, 0, 1, 1): do_nothing,
         (0, 1, 0, 0): partial(comment_pr, pr, "approved_missing_automerge_and_ci"),
