@@ -1,3 +1,4 @@
 flask==1.1.2
 pygithub==1.53
 python-dotenv==0.15.0
+requests==2.25.0
