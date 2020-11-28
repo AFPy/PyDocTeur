@@ -1,14 +1,20 @@
 import datetime
+import os
 
 import requests
+from requests.auth import HTTPBasicAuth
 
 
 def get_checks_statuses_conclusions(pr):
     commits_sha = [commit.sha for commit in pr.get_commits()]
     last_sha = commits_sha[-1]
-    resp = requests.get(f"https://api.github.com/repos/pydocteur/fake-docs/commits/{last_sha}/check-runs")
+    resp = requests.get(
+        f"https://api.github.com/repos/pydocteur/fake-docs/commits/{last_sha}/check-runs",
+        auth=HTTPBasicAuth(os.getenv("GH_USERNAME"), os.getenv("GH_TOKEN")),
+    )
     if resp.status_code == 403:
         reset_ts = resp.headers.get("X-Ratelimit-Reset")
+        print("Rate limit reached, waiting until reset_ts")
         while datetime.datetime.utcnow().timestamp() < int(reset_ts):
             continue
     runs = resp.json()["check_runs"]

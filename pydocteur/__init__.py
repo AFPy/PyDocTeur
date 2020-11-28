@@ -15,7 +15,7 @@ from pydocteur.utils.state_actions import merge_and_thank_contributors
 
 load_dotenv()
 
-REQUIRED_ENV_VARS = ["GH_TOKEN", "REPOSITORY_NAME"]
+REQUIRED_ENV_VARS = ["GH_TOKEN", "REPOSITORY_NAME", "GH_USERNAME"]
 
 for var in REQUIRED_ENV_VARS:
     if var not in os.environ:
