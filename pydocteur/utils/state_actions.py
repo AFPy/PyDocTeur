@@ -1,3 +1,4 @@
+import os
 import random
 import time
 
@@ -22,8 +23,13 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 [Source code](https://github.com/afpy/pydocteur)
 
 (state: {state})
+`PyDocTeur {version}`
+
 </details>
 """
+
+with open(os.path.join(os.path.dirname(__file__), "../../VERSION"), "r") as handle:
+    VERSION = handle.read()
 
 
 def replace_body_variables(pr: PullRequest, body: str):
@@ -48,7 +54,7 @@ def comment_pr(pr: PullRequest, state: str):
     body = random.choice(bodies)
     # TODO: Add replacement of variables from selected body
     body = replace_body_variables(pr, body)
-    pr.create_issue_comment(body + END_OF_BODY.format(state=state))
+    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
@@ -58,7 +64,7 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     print("MERGING: Sending warning")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
-    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state))
+    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=VERSION))
 
     print("MERGING: Sleeping 1s")
     time.sleep(1)
@@ -70,4 +76,4 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     print("MERGING: Sending thanks")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
-    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state))
+    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=VERSION))
