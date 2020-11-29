@@ -12,7 +12,7 @@ def get_checks_statuses_conclusions(pr):
     last_sha = commits_sha[-1]
     logging.debug(f"PR #{pr.number} last sha is {last_sha}")
     resp = requests.get(
-        f"https://api.github.com/repos/pydocteur/fake-docs/commits/{last_sha}/check-runs",
+        f"https://api.github.com/repos/{os.getenv('REPOSITORY_NAME')}/commits/{last_sha}/check-runs",
         auth=HTTPBasicAuth(os.getenv("GH_USERNAME"), os.getenv("GH_TOKEN")),
     )
     if resp.status_code == 403:
