@@ -65,9 +65,12 @@ def process_incoming_payload():
         logging.info("Payload received corresponds to issue, PR not found or PR already merged or closed, ignoring.")
         return "OK", 200
 
-    if is_label_set(pr, "Title needs formatting."):
-        logging.info("Received from Action PR Title checker, ignoring")
-        return "OK", 200
+    try:
+        if payload["action"] == "labeled" and payload["label"]["name"] == "Title needs formatting.":
+            logging.info("Received from Action PR Title checker, ignoring")
+            return "OK", 200
+    except KeyError:
+        pass
 
     state = state_name(
         automerge=is_label_set(pr, "🤖 automerge"),
