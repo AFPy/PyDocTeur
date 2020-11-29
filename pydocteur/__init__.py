@@ -61,8 +61,16 @@ def process_incoming_payload():
         return "OK", 200
 
     pr = get_pull_request(gh, payload)
-    if not pr or pr.is_merged() or pr.state == "closed":
-        logging.info("Payload received corresponds to issue, PR not found or PR already merged or closed, ignoring.")
+    if not pr:
+        logging.info("Payload received corresponds to issue or PR not found, ignoring.")
+        return "OK", 200
+
+    if pr.is_merged():
+        logging.info(f"PR {pr.number} is merged, ignoring.")
+        return "OK", 200
+
+    if pr.closed_at:
+        logging.info(f"PR {pr.number} is closed, ignoring.")
         return "OK", 200
 
     try:
