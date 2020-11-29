@@ -7,7 +7,6 @@ from flask import Flask
 from flask import request
 
 from pydocteur.utils.get_pr import get_pull_request
-from pydocteur.utils.logging import setup_logging
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
 from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
@@ -23,9 +22,6 @@ for var in REQUIRED_ENV_VARS:
         raise EnvironmentError(f"Missing {var} in environment")
 
 application = Flask(__name__)
-
-
-setup_logging()
 
 
 def state_name(**kwargs):
