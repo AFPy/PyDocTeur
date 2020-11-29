@@ -7,6 +7,8 @@ from requests.auth import HTTPBasicAuth
 
 
 def get_checks_statuses_conclusions(pr):
+    if is_label_set(pr, "skip-ci"):
+        return True
     logging.info(f"Checking PR #{pr.number} CI results")
     commits_sha = [commit.sha for commit in pr.get_commits()]
     last_sha = commits_sha[-1]
