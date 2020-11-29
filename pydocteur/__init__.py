@@ -48,12 +48,16 @@ def process_incoming_payload():
 
     # If pull request just got opened
     try:
-        payload["action"] == "opened"
-        payload["pull_request"]["number"]
+        if payload["action"] == "opened":
+            try:
+                payload["pull_request"]["number"]
+            except KeyError:
+                pass
+            else:
+                logging.info("Received payload from opened PR, ignoring.")
+                return "OK", 200
     except KeyError:
-        pass
-    else:
-        logging.info("Received payload from opened PR, ignoring.")
+        logging.info("Received payload from refs updating, ignoring.")
         return "OK", 200
 
     pr = get_pull_request(gh, payload)
