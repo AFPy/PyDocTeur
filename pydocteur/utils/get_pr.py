@@ -9,8 +9,11 @@ def get_pull_request(gh, payload):
     gh_repo = gh.get_repo(os.getenv("REPOSITORY_NAME"))
     logging.info("Trying to find PR number from payload")
 
-    if payload["action"] == "completed":
-        logging.info("Check completed, ignoring and returning None")
+    is_run = payload.get("check_run", False)
+    is_suite = payload.get("check_suite", False)
+
+    if is_run or is_suite:
+        logging.info("Payload is from checks, ignoring")
         return None
 
     try:
