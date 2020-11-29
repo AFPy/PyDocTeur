@@ -1,6 +1,6 @@
 from functools import lru_cache
 import logging
-import os
+from pathlib import Path
 import random
 import time
 
@@ -33,10 +33,9 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 @lru_cache(maxsize=1)
 def version():
-    with open(os.path.join(os.path.dirname(__file__), "../../VERSION"), "r") as handle:
-        version = handle.read()
-        logging.debug("Loading version %s", version)
-        return version
+    version = (Path(__file__).parent.parent.parent / "VERSION").read_text()
+    logging.debug("Loading version %s", version)
+    return version
 
 
 def replace_body_variables(pr: PullRequest, body: str):
