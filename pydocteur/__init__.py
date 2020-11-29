@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 from dotenv import load_dotenv
@@ -11,7 +12,6 @@ from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
 from pydocteur.utils.state_actions import merge_and_thank_contributors
-
 
 load_dotenv()
 
@@ -40,6 +40,7 @@ def state_name(**kwargs):
 def process_incoming_payload():
     payload = json.loads(request.data)
     if payload["sender"]["login"] == "PyDocTeur":
+        logging.info("Received payload sent from PyDocTeur user, ignoring.")
         return "OK", 200
 
     # If pull request just got opened
@@ -49,10 +50,12 @@ def process_incoming_payload():
     except KeyError:
         pass
     else:
+        logging.info("Received payload from opened PR, ignoring.")
         return "OK", 200
 
     pr = get_pull_request(payload)
     if not pr or pr.is_merged():
+        logging.info("PR not found or PR already merged, ignoring")
         return "OK", 200
 
     state = state_name(
@@ -63,7 +66,7 @@ def process_incoming_payload():
     )
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
-        print("State has not changed, ignoring event.")
+        logging.info(f"State of PR #{pr.number} hasn't changed, ignoring")
         return "OK", 200
     state_dict = {
         "automerge_approved_testok": merge_and_thank_contributors,

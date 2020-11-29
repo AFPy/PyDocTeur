@@ -1,3 +1,5 @@
+from functools import lru_cache
+import logging
 import os
 import random
 import time
@@ -28,8 +30,13 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 </details>
 """
 
-with open(os.path.join(os.path.dirname(__file__), "../../VERSION"), "r") as handle:
-    VERSION = handle.read()
+
+@lru_cache(maxsize=1)
+def version():
+    with open(os.path.join(os.path.dirname(__file__), "../../VERSION"), "r") as handle:
+        version = handle.read()
+        logging.debug("Loading version %s", version)
+        return version
 
 
 def replace_body_variables(pr: PullRequest, body: str):
@@ -45,35 +52,34 @@ def replace_body_variables(pr: PullRequest, body: str):
 
 
 def comment_pr(pr: PullRequest, state: str):
-    print("Getting comment bodies choices")
+    logging.info(f"PR #{pr.number}: Commenting.")
     bodies = get_comment_bodies(state)
     if not bodies:
-        print("No comment for state", state)
+        logging.warning(f"PR #{pr.number}: No comment for state {state}")
         return
-    print("Choosing body")
     body = random.choice(bodies)
-    # TODO: Add replacement of variables from selected body
     body = replace_body_variables(pr, body)
-    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
+    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=version()))
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
+    logging.info(f"PR #{pr.number}: About to merge")
     warnings = get_comment_bodies("automerge_approved_testok")
     thanks = get_comment_bodies("automerge_approved_testok-done")
 
-    print("MERGING: Sending warning")
+    logging.info(f"PR #{pr.number}: Sending warning before merge")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
-    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=VERSION))
+    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=version()))
 
-    print("MERGING: Sleeping 1s")
+    logging.debug(f"PR #{pr.number}: Sleeping one second")
     time.sleep(1)
 
-    print("MERGING: MERGING")
     # TODO: Custom commit message/title with nice infos and saying it's auto merged.
     pr.merge(merge_method="squash", commit_message="")
+    logging.info(f"PR #{pr.number}: Merged.")
 
-    print("MERGING: Sending thanks")
+    logging.info(f"PR #{pr.number}: Sending thanks after merge")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
-    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=VERSION))
+    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=version()))

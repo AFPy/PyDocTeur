@@ -1,4 +1,7 @@
 from pydocteur import application
+from pydocteur.utils.logging import setup_logging
+
 
 if __name__ == "__main__":
-    application.run(debug=False)
+    setup_logging()
+    application.run(debug=True)
