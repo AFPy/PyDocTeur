@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask import request
+from github import Github
 
 from pydocteur.utils.get_pr import get_pull_request
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
@@ -22,6 +23,8 @@ for var in REQUIRED_ENV_VARS:
         raise EnvironmentError(f"Missing {var} in environment")
 
 application = Flask(__name__)
+
+gh = Github(os.getenv("GH_TOKEN"))
 
 
 def state_name(**kwargs):
@@ -53,9 +56,9 @@ def process_incoming_payload():
         logging.info("Received payload from opened PR, ignoring.")
         return "OK", 200
 
-    pr = get_pull_request(payload)
+    pr = get_pull_request(gh, payload)
     if not pr or pr.is_merged():
-        logging.info("PR not found or PR already merged, ignoring")
+        logging.info("Payload received corresponds to issue, PR not found or PR already merged, ignoring.")
         return "OK", 200
 
     state = state_name(
@@ -66,7 +69,7 @@ def process_incoming_payload():
     )
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
-        logging.info(f"State of PR #{pr.number} hasn't changed, ignoring")
+        logging.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
         return "OK", 200
     state_dict = {
         "automerge_approved_testok": merge_and_thank_contributors,

@@ -1,8 +1,8 @@
-from functools import lru_cache
 import logging
-from pathlib import Path
 import random
 import time
+from functools import lru_cache
+from pathlib import Path
 
 from github import PullRequest
 
@@ -33,13 +33,11 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 @lru_cache(maxsize=1)
 def version():
-    version = (Path(__file__).parent.parent.parent / "VERSION").read_text()
-    logging.debug("Loading version %s", version)
-    return version
+    return (Path(__file__).parent.parent.parent / "VERSION").read_text()
 
 
 def replace_body_variables(pr: PullRequest, body: str):
-    print("Replacing variables")
+    logging.debug("Replacing variables")
     author = pr.user.login
     reviewers_login = [review.user.login for review in pr.get_reviews()]
     new_body = body.replace("@$AUTHOR", "@" + author)
@@ -51,13 +49,13 @@ def replace_body_variables(pr: PullRequest, body: str):
 
 
 def comment_pr(pr: PullRequest, state: str):
-    logging.info(f"PR #{pr.number}: Commenting.")
     bodies = get_comment_bodies(state)
     if not bodies:
         logging.warning(f"PR #{pr.number}: No comment for state {state}")
         return
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
+    logging.info(f"PR #{pr.number}: Commenting.")
     pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=version()))
 
 

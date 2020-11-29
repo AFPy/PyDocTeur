@@ -1,13 +1,10 @@
 import logging
 import os
 
-from github import Github
 from github import GithubException
 
 
-def get_pull_request(payload):
-    logging.debug("Logging in to Github")
-    gh = Github(os.getenv("GH_TOKEN"))
+def get_pull_request(gh, payload):
     logging.debug("Getting repository")
     gh_repo = gh.get_repo(os.getenv("REPOSITORY_NAME"))
     logging.info("Trying to find PR number from payload")
