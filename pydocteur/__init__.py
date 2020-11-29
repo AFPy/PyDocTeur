@@ -75,7 +75,7 @@ def process_incoming_payload():
 
     try:
         if payload["action"] == "labeled" and payload["label"]["name"] == "Title needs formatting.":
-            logging.info("Received from Action PR Title checker, ignoring")
+            logging.info(f"PR {pr.number}: Received from Action PR Title checker, ignoring")
             return "OK", 200
     except KeyError:
         pass
