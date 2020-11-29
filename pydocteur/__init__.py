@@ -57,8 +57,12 @@ def process_incoming_payload():
         return "OK", 200
 
     pr = get_pull_request(gh, payload)
-    if not pr or pr.is_merged():
-        logging.info("Payload received corresponds to issue, PR not found or PR already merged, ignoring.")
+    if not pr or pr.is_merged() or pr.state == "closed":
+        logging.info("Payload received corresponds to issue, PR not found or PR already merged or closed, ignoring.")
+        return "OK", 200
+
+    if is_label_set(pr, "Title needs formatting."):
+        logging.info("Received from Action PR Title checker, ignoring")
         return "OK", 200
 
     state = state_name(
