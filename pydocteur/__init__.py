@@ -27,10 +27,6 @@ application = Flask(__name__)
 
 setup_logging()
 
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("urllib3").setLevel(logging.WARNING)
-logging.getLogger("github").setLevel(logging.WARNING)
-
 
 def state_name(**kwargs):
     SIMPLIFICATIONS = {

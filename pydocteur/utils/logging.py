@@ -13,6 +13,10 @@ def setup_logging():
         datefmt="%d-%m-%Y:%H:%M:%S",
     )
 
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    logging.getLogger("github").setLevel(logging.WARNING)
+
     logging.info("************************************************************")
     logging.info("************ Starting new instance of PyDocTeur ************")
     logging.info("************************************************************")
