@@ -47,3 +47,33 @@ def is_pr_approved(pr):
     is_approved = any(review.state == "APPROVED" for review in pr_reviews)
     logging.info(f"is_approved for PR #{pr.number} is {is_approved}")
     return is_approved
+
+
+def is_first_time_contributor(pr):
+    owner, name = os.getenv("REPOSITORY_NAME").split("/")
+    query = """
+    {
+      repository(owner: "%s", name: "%s") {
+        pullRequest(number: %s) {
+          author {
+            login
+          }
+          authorAssociation
+        }
+      }
+    }
+    """ % (
+        owner,
+        name,
+        pr.number,
+    )
+    headers = {"Authorization": "Bearer {}".format(os.getenv("GH_TOKEN"))}
+    resp = requests.post("https://api.github.com/graphql", json={"query": query}, headers=headers)
+    if resp.status_code == 403:
+        reset_ts = resp.headers.get("X-Ratelimit-Reset")
+        logging.error(f"Rate limit reached, waiting until {reset_ts}")
+        while datetime.datetime.utcnow().timestamp() < int(reset_ts):
+            continue
+    results = resp.json()
+    association = results["data"]["repository"]["pullRequest"]["authorAssociation"]
+    return association == "FIRST_TIME_CONTRIBUTOR"

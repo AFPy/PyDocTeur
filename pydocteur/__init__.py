@@ -10,6 +10,7 @@ from github import Github
 
 from pydocteur.utils.get_pr import get_pull_request
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
+from pydocteur.utils.pr_status import is_first_time_contributor
 from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
@@ -92,6 +93,7 @@ def process_incoming_payload():
         approved=is_pr_approved(pr),
         testok=get_checks_statuses_conclusions(pr),
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
+        first_time=is_first_time_contributor(pr),
     )
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
