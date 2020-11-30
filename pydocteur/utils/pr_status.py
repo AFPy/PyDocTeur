@@ -50,6 +50,7 @@ def is_pr_approved(pr):
 
 
 def is_first_time_contributor(pr):
+    logging.info(f"Checking if PR #{pr.number} is from first time contributor")
     owner, name = os.getenv("REPOSITORY_NAME").split("/")
     query = """
     {

@@ -95,6 +95,7 @@ def process_incoming_payload():
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
         first_time=is_first_time_contributor(pr),
     )
+    logging.info(f"State of PR #{pr.number} is {state}")
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
         logging.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
