@@ -21,6 +21,6 @@ jobs:
         eval $(ssh-agent)
         ssh-add
         rsync -a ./ pydocteur-afpy-org@deb.afpy.org:/home/pydocteur-afpy-org/src/
-        ssh afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
-        ssh afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install -r /home/pydocteur-afpy-org/src/requirements.txt
-        ssh afpy-org@deb.afpy.org systemctl --user restart pydocteur.service
+        ssh pydocteur-afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
+        ssh pydocteur-afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install -r /home/pydocteur-afpy-org/src/requirements.txt
+        ssh pydocteur-afpy-org@deb.afpy.org systemctl --user restart pydocteur.service
