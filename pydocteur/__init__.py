@@ -107,6 +107,5 @@ def process_incoming_payload():
     }
     if is_first_time_contributor(pr) and not is_already_greeted(pr):
         greet_user(pr)
-    else:
-        state_dict.get(state, comment_pr)(state=state, pr=pr)
+    state_dict.get(state, comment_pr)(state=state, pr=pr)
     return "OK", 200
