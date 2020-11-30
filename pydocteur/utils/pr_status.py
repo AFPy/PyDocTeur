@@ -78,3 +78,8 @@ def is_first_time_contributor(pr):
     results = resp.json()
     association = results["data"]["repository"]["pullRequest"]["authorAssociation"]
     return association == "FIRST_TIME_CONTRIBUTOR"
+
+
+def is_already_greeted(pr):
+    my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
+    return any("(state: greetings)" in my_comment for my_comment in my_comments)
