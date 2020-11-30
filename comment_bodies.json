@@ -1,41 +1,45 @@
 {
   "donotmerge": [
     "C'est noté, celle là, je n'y touche pas.",
-    "`DO NOT MERGE` ? OK je n'y touche même pas avec un bâton !"
+    "`DO NOT MERGE` ? OK je n'y touche même pas avec un bâton !"
   ],
   "testok": [
-    "Les tests passent \\o/ Bravo et merci @$AUTHOR ! Est-ce qu'un relecteur peut me relire ça ? CC @$REVIEWERS (et j'ai rien contre un petit label `automerge`)"
+    "Les tests passent \\o/ Bravo et merci @$AUTHOR ! Est-ce qu'un relecteur peut me relire ça ? CC @$REVIEWERS (et j'ai rien contre un petit label `automerge`)"
   ],
   "approved": [
     "Donc, il y a quelqu'un ici qui dégaine le `approuve` plus vite que les tests ne passent…",
     "Tu viens de relire plus vite que les tests, mais t'as oublié le label `automerge`.",
-    "Tellement rapide l'approve ! Un petit label `automerge`, j'attend les tests, et on est bons !"
+    "Tellement rapide l'approve ! Un petit label `automerge`, j'attend les tests, et on est bons !"
   ],
   "approved_testok": [
-    "C'est bien parti ! Ça manque d'un label `automerge` ?",
-    "ON Y EST PRESQUE ! Un p'tit label `automerge` et je merge ça !",
-    "Rajoutez moi un `automerge` et ca part en prod !"
+    "C'est bien parti ! Ça manque d'un label `automerge` ?",
+    "ON Y EST PRESQUE ! Un p'tit label `automerge` et je merge ça !",
+    "Rajoutez moi un `automerge` et ca part en prod !"
   ],
   "automerge": [
     "Je mergerai cette PR dès que les tests passeront et qu'elle sera approuvée."
   ],
   "automerge_donotmerge": [
-    "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire la !",
-    "Décidez vous les gars, `DO NOT MERGE` ou `automerge` ?"
+    "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire la !",
+    "Décidez vous les gars, `DO NOT MERGE` ou `automerge` ?"
 
   ],
   "automerge_testok": [
-    "Y'a-il un humain dans le coin pour relire ? CC @$REVIEWERS",
-    "Plus que la relecture, et si c'est bon je merge !"
+    "Y'a-il un humain dans le coin pour relire ? CC @$REVIEWERS",
+    "Plus que la relecture, et si c'est bon je merge !"
   ],
   "automerge_approved": [
-    "Dès que les tests passent, je merge ! Merci @$AUTHOR @$REVIEWERS !",
-    "Si la CI passe, on merge ! Merci @$AUTHOR pour la PR et @$REVIEWERS pour les reviews !"
+    "Dès que les tests passent, je merge ! Merci @$AUTHOR @$REVIEWERS !",
+    "Si la CI passe, on merge ! Merci @$AUTHOR pour la PR et @$REVIEWERS pour les reviews !"
   ],
   "automerge_approved_testok": [
-    "Hop, je m'occupe de merger ça, merci à tous !"
+    "Hop, je m'occupe de merger ça, merci à tous !",
+    "Ça pars en merge, ne touchez à plus rien, je m'en occupe !",
+    "GG ! Je merge ça, merci à tous !"
   ],
   "automerge_approved_testok-done": [
-    "Et c'est mergé ! Merci @$AUTHOR pour cette belle PR !"
+    "Et c'est mergé ! Merci @$AUTHOR pour cette belle PR !",
+    "Merci beaucoup @$AUTHOR pour cette PR ! C'est mergé, suivante !",
+    "Génial ! Merci @$AUTHOR pour cette contribution ! C'est mergé."
   ]
 }
