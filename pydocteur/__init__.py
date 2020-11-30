@@ -4,6 +4,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask import jsonify
 from flask import request
 from github import Github
 
@@ -13,6 +14,7 @@ from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
 from pydocteur.utils.state_actions import merge_and_thank_contributors
+from pydocteur.utils.state_actions import version
 
 load_dotenv()
 
@@ -39,8 +41,13 @@ def state_name(**kwargs):
     return SIMPLIFICATIONS.get(state, state)
 
 
-@application.route("/", methods=["POST"])
+@application.route("/", methods=["POST", "GET"])
 def process_incoming_payload():
+    if request.method == "GET":
+        return (
+            jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": version().strip()}),
+            200,
+        )
     payload = json.loads(request.data)
     if payload["sender"]["login"] == "PyDocTeur":
         logging.info("Received payload sent from PyDocTeur user, ignoring.")

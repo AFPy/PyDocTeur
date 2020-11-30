@@ -39,7 +39,7 @@ def version():
 def replace_body_variables(pr: PullRequest, body: str):
     logging.debug("Replacing variables")
     author = pr.user.login
-    reviewers_login = [review.user.login for review in pr.get_reviews()]
+    reviewers_login = list(set([review.user.login for review in pr.get_reviews()]))
     new_body = body.replace("@$AUTHOR", "@" + author)
     if not reviewers_login:
         reviewers_login = ["JulienPalard", "Seluj78"]
