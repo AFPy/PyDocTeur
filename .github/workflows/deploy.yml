@@ -1,0 +1,26 @@
+name: Publish
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy
+      env:
+        deploy_key: ${{secrets.deploy_key}}
+        known_hosts: ${{secrets.known_hosts}}
+      run: |
+        mkdir -p ${HOME}/.ssh
+        printf "%s\n" "$known_hosts" > ${HOME}/.ssh/known_hosts
+        printf "%s\n" "$deploy_key" > ${HOME}/.ssh/id_rsa
+        chmod 600 ${HOME}/.ssh/id_rsa
+        eval $(ssh-agent)
+        ssh-add
+        rsync -a ./ pydocteur-afpy-org@deb.afpy.org:/home/pydocteur-afpy-org/src/
+        ssh afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
+        ssh afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install -r /home/pydocteur-afpy-org/src/requirements.txt
+        ssh afpy-org@deb.afpy.org systemctl --user restart pydocteur.service
