@@ -80,3 +80,11 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
     pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=version()))
+
+
+def greet_user(pr: PullRequest):
+    bodies = get_comment_bodies("greetings")
+    body = random.choice(bodies)
+    body = replace_body_variables(pr, body)
+    logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
+    pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=version()))

@@ -41,5 +41,8 @@
     "Et c'est mergé ! Merci @$AUTHOR pour cette belle PR !",
     "Merci beaucoup @$AUTHOR pour cette PR ! C'est mergé, suivante !",
     "Génial ! Merci @$AUTHOR pour cette contribution ! C'est mergé."
+  ],
+  "greetings": [
+    "Hello @$AUTHOR ! Bienvenue dans le monde merveilleux de la traduction de la documentation de Python !\nJe suis PyDocTeur, le robot amical qui s'occupe d'automatiser certaines tâches.\nSi tu as des questions, n'hésite pas à ping @JulienPalard ou @Seluj78"
   ]
 }

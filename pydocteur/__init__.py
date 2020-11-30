@@ -10,9 +10,12 @@ from github import Github
 
 from pydocteur.utils.get_pr import get_pull_request
 from pydocteur.utils.pr_status import get_checks_statuses_conclusions
+from pydocteur.utils.pr_status import is_already_greeted
+from pydocteur.utils.pr_status import is_first_time_contributor
 from pydocteur.utils.pr_status import is_label_set
 from pydocteur.utils.pr_status import is_pr_approved
 from pydocteur.utils.state_actions import comment_pr
+from pydocteur.utils.state_actions import greet_user
 from pydocteur.utils.state_actions import merge_and_thank_contributors
 from pydocteur.utils.state_actions import version
 
@@ -93,6 +96,7 @@ def process_incoming_payload():
         testok=get_checks_statuses_conclusions(pr),
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
     )
+    logging.info(f"State of PR #{pr.number} is {state}")
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
         logging.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
@@ -101,5 +105,7 @@ def process_incoming_payload():
         "automerge_approved_testok": merge_and_thank_contributors,
         # ...
     }
+    if is_first_time_contributor(pr) and not is_already_greeted(pr):
+        greet_user(pr)
     state_dict.get(state, comment_pr)(state=state, pr=pr)
     return "OK", 200
