@@ -1,1 +1,1 @@
-from pydocteur import application
+from pydocteur import application  # noqa
