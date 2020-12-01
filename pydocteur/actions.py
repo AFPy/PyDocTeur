@@ -1,12 +1,19 @@
+import json
 import logging
+import os
 import random
 import time
 from functools import lru_cache
-from pathlib import Path
 
 from github import PullRequest
 
-from pydocteur.utils.comment_body import get_comment_bodies
+from pydocteur.github_api import get_trad_team_members
+from pydocteur.pr_status import is_already_greeted
+from pydocteur.pr_status import is_first_time_contributor
+from pydocteur.settings import VERSION
+
+COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../comment_bodies.json")
+
 
 END_OF_BODY = """
 
@@ -31,21 +38,24 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 """
 
 
-@lru_cache(maxsize=1)
-def version():
-    return (Path(__file__).parent.parent.parent / "VERSION").read_text()
-
-
 def replace_body_variables(pr: PullRequest, body: str):
     logging.debug("Replacing variables")
     author = pr.user.login
     reviewers_login = {review.user.login for review in pr.get_reviews()}
     new_body = body.replace("@$AUTHOR", "@" + author)
     if not reviewers_login:
-        reviewers_login = ["JulienPalard", "Seluj78"]
+        reviewers_login = get_trad_team_members()
     reviewers = ", @".join(reviewers_login)
     new_body = new_body.replace("@$REVIEWERS", "@" + reviewers)
     return new_body
+
+
+@lru_cache()
+def get_comment_bodies(state):
+    logging.debug(f"Getting comment bodies for {state}")
+    with open(COMMENT_BODIES_FILEPATH, "r") as handle:
+        bodies = json.load(handle).get(state)
+    return bodies
 
 
 def comment_pr(pr: PullRequest, state: str):
@@ -56,7 +66,7 @@ def comment_pr(pr: PullRequest, state: str):
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
     logging.info(f"PR #{pr.number}: Commenting.")
-    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
@@ -67,7 +77,7 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     logging.info(f"PR #{pr.number}: Sending warning before merge")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
-    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=VERSION))
 
     logging.debug(f"PR #{pr.number}: Sleeping one second")
     time.sleep(1)
@@ -79,12 +89,13 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     logging.info(f"PR #{pr.number}: Sending thanks after merge")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
-    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=VERSION))
 
 
-def greet_user(pr: PullRequest):
-    bodies = get_comment_bodies("greetings")
-    body = random.choice(bodies)
-    body = replace_body_variables(pr, body)
-    logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
-    pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=version()))
+def maybe_greet_user(pr: PullRequest):
+    if is_first_time_contributor(pr) and not is_already_greeted(pr):
+        bodies = get_comment_bodies("greetings")
+        body = random.choice(bodies)
+        body = replace_body_variables(pr, body)
+        logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
+        pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
