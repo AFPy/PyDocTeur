@@ -4,10 +4,12 @@ import os
 import random
 import time
 from functools import lru_cache
-from pathlib import Path
 
 from github import PullRequest
 
+from pydocteur.pr_status import is_already_greeted
+from pydocteur.pr_status import is_first_time_contributor
+from pydocteur.settings import VERSION
 from pydocteur.github_api import get_trad_team_members
 
 COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../comment_bodies.json")
@@ -34,11 +36,6 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 </details>
 """
-
-
-@lru_cache(maxsize=1)
-def version():
-    return (Path(__file__).parent.parent / "VERSION").read_text()
 
 
 def replace_body_variables(pr: PullRequest, body: str):
@@ -69,7 +66,7 @@ def comment_pr(pr: PullRequest, state: str):
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
     logging.info(f"PR #{pr.number}: Commenting.")
-    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
@@ -80,7 +77,7 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     logging.info(f"PR #{pr.number}: Sending warning before merge")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
-    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=VERSION))
 
     logging.debug(f"PR #{pr.number}: Sleeping one second")
     time.sleep(1)
@@ -92,12 +89,14 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     logging.info(f"PR #{pr.number}: Sending thanks after merge")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
-    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=version()))
+    pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=VERSION))
 
 
-def greet_user(pr: PullRequest):
+def maybe_greet_user(pr: PullRequest):
+    if is_first_time_contributor(pr) and not is_already_greeted(pr):
+        return
     bodies = get_comment_bodies("greetings")
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
     logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
-    pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=version()))
+    pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))

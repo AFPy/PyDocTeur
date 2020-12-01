@@ -3,7 +3,7 @@ import os
 
 from pydocteur.github_api import get_graphql_api
 from pydocteur.github_api import get_rest_api
-from pydocteur.static import REPOSITORY_NAME
+from pydocteur.settings import REPOSITORY_NAME
 
 
 def get_checks_statuses_conclusions(pr):
@@ -73,3 +73,24 @@ def is_first_time_contributor(pr):
 def is_already_greeted(pr):
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     return any("(state: greetings)" in my_comment for my_comment in my_comments)
+
+
+def state_name(**kwargs):
+    SIMPLIFICATIONS = {
+        "testok_donotmerge": "donotmerge",
+        "approved_testok_donotmerge": "donotmerge",
+        "automerge_testok_donotmerge": "automerge_donotmerge",
+        "automerge_approved_donotmerge": "automerge_donotmerge",
+        "automerge_approved_testok_donotmerge": "automerge_donotmerge",
+    }
+    state = "_".join(key for key, value in kwargs.items() if value)
+    return SIMPLIFICATIONS.get(state, state)
+
+
+def get_pr_state(pr) -> str:
+    return state_name(
+        automerge=is_label_set(pr, "🤖 automerge"),
+        approved=is_pr_approved(pr),
+        testok=get_checks_statuses_conclusions(pr),
+        donotmerge=is_label_set(pr, "DO NOT MERGE"),
+    )

@@ -1,13 +1,16 @@
 import logging
 
 import requests
-from github import GithubException
 from requests.auth import HTTPBasicAuth
+from github import GithubException
+from github import Github
 
-from pydocteur.static import gh
-from pydocteur.static import GH_TOKEN
-from pydocteur.static import GH_USERNAME
-from pydocteur.static import REPOSITORY_NAME
+from pydocteur.settings import GH_TOKEN
+from pydocteur.settings import GH_USERNAME
+from pydocteur.settings import REPOSITORY_NAME
+
+
+gh = Github(GH_TOKEN)
 
 
 def get_rest_api(url: str) -> requests.Response:
@@ -21,7 +24,7 @@ def get_graphql_api(query: str) -> requests.Response:
     return resp
 
 
-def get_pull_request(gh, payload):
+def get_pull_request(payload):
     logging.debug("Getting repository")
     gh_repo = gh.get_repo(REPOSITORY_NAME)
     logging.info("Trying to find PR number from payload")
@@ -47,7 +50,7 @@ def get_pull_request(gh, payload):
             except GithubException:
                 logging.debug(f"Found issue {issue_number}, returning None")
                 return None
-    except:  # noqa
+    except Exception:  # noqa
         logging.warning("Unknown payload, returning None")
         logging.debug(payload)
         return None
@@ -57,3 +60,12 @@ def get_pull_request(gh, payload):
 def get_trad_team_members():
     logging.debug("Getting default reviewers from team members")
     return [user.login for user in gh.get_organization("afpy").get_team_by_slug("traduction").get_members()]
+
+
+def has_pr_number(payload) -> bool:
+    try:
+        payload["pull_request"]["number"]
+    except KeyError:
+        return False
+    else:
+        return True
