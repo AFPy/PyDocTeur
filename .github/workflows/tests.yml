@@ -18,15 +18,18 @@ jobs:
         tool:
           - name: flake8
             run: flake8
+            deps: flake8
           - name: black
             run: black --check --diff
+            deps: black
           - name: pytest
             run: pytest
+            deps: pytest pytest-vcr
 
     name: ${{ matrix.tool.name }}
     steps:
       - uses: actions/checkout@v2
       - name: Install ${{ matrix.tool.name }}
-        run: python3 -m pip install ${{ matrix.tool.name }}
+        run: python3 -m pip install ${{ matrix.tool.deps }}
       - name: Run ${{ matrix.tool.name }}
         run: ${{ matrix.tool.run }}
