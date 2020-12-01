@@ -30,7 +30,9 @@ jobs:
     steps:
       - uses: actions/cache@v2
         with:
-          path: "$HOME/.local/"
+          path: |
+            $HOME/.local/
+            $HOME/.cache/
           key: 1
       - uses: actions/checkout@v2
       - name: Install ${{ matrix.tool.name }}
