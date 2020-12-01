@@ -16,4 +16,4 @@ GH_USERNAME = os.getenv("GH_USERNAME")
 REPOSITORY_NAME = os.getenv("REPOSITORY_NAME")
 GH_TOKEN = os.getenv("GH_TOKEN")
 
-VERSION = (Path(__file__).parent.parent.parent / "VERSION").read_text().strip()
+VERSION = (Path(__file__).parent.parent / "VERSION").read_text().strip()
