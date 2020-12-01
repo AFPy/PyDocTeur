@@ -11,35 +11,22 @@ on:
 
 
 jobs:
-  flake8:
-    name: 'Lint with Flake8'
+  tests:
     runs-on: ubuntu-latest
-    steps:
-      - name: Install flake8
-      - uses: actions/checkout@v2
-        run: |
-          sudo python3 -m pip install flake8
-      - name: Run flake8
-        run: flake8
+    strategy:
+      matrix:
+        tool:
+          - name: flake8
+            run: flake8
+          - name: black
+            run: black --check --diff
+          - name: pytest
+            run: pytest
 
-  black:
-    name: 'Lint with black'
-    runs-on: ubuntu-latest
+    name: ${{ matrix.tool.name }}
     steps:
-      - name: Install black
+      - name: Install ${{ matrix.tool.name }}
       - uses: actions/checkout@v2
-        run: |
-          sudo python3 -m pip install black
-      - name: Run black
-        run: black --check --diff
-
-  pytest:
-    name: 'Test with Pytest'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install pytest
-      - uses: actions/checkout@v2
-        run: |
-          sudo python3 -m pip install pytest
-      - name: Run pytest
-        run: pytest
+        run: python3 -m pip install ${{ matrix.tool.name }}
+      - name: Run ${{ matrix.tool.name }}
+        run: ${{ matrix.tool.run }}
