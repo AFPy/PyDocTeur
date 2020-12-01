@@ -28,9 +28,15 @@ jobs:
 
     name: ${{ matrix.tool.name }}
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: "$HOME/.local/"
+          key: 1
       - uses: actions/checkout@v2
       - name: Install ${{ matrix.tool.name }}
-        run: python3 -m pip install ${{ matrix.tool.deps }}
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install ${{ matrix.tool.deps }}
       - name: Run ${{ matrix.tool.name }}
         run: |
           PATH="$PATH:$HOME/.local/bin/"
