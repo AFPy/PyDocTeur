@@ -32,4 +32,6 @@ jobs:
       - name: Install ${{ matrix.tool.name }}
         run: python3 -m pip install ${{ matrix.tool.deps }}
       - name: Run ${{ matrix.tool.name }}
-        run: ${{ matrix.tool.run }}
+        run: |
+          PATH="$PATH:$HOME/.local/bin/"
+          ${{ matrix.tool.run }}
