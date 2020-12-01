@@ -9,24 +9,24 @@
   "approved": [
     "Donc, il y a quelqu'un ici qui dégaine le `approuve` plus vite que les tests ne passent…",
     "Tu viens de relire plus vite que les tests, mais t'as oublié le label `automerge`.",
-    "Tellement rapide l'approve ! Un petit label `automerge`, j'attend les tests, et on est bons !"
+    "Tellement rapide l'approve ! Un petit label `automerge`, j'attends les tests, et on est bons !"
   ],
   "approved_testok": [
     "C'est bien parti ! Ça manque d'un label `automerge` ?",
     "ON Y EST PRESQUE ! Un p'tit label `automerge` et je merge ça !",
-    "Rajoutez moi un `automerge` et ca part en prod !"
+    "Rajoutez-moi un `automerge` et ca part en prod !"
   ],
   "automerge": [
     "Je mergerai cette PR dès que les tests passeront et qu'elle sera approuvée."
   ],
   "automerge_donotmerge": [
-    "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire la !",
-    "Décidez vous les gars, `DO NOT MERGE` ou `automerge` ?"
+    "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire là !",
+    "Décidez-vous les gars, `DO NOT MERGE` ou `automerge` ?"
 
   ],
   "automerge_testok": [
     "Y'a-il un humain dans le coin pour relire ? CC @$REVIEWERS",
-    "Plus que la relecture, et si c'est bon je merge !"
+    "Plus que la relecture, et si c'est bon, je merge !"
   ],
   "automerge_approved": [
     "Dès que les tests passent, je merge ! Merci @$AUTHOR @$REVIEWERS !",
