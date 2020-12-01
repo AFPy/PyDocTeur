@@ -7,10 +7,10 @@ from functools import lru_cache
 
 from github import PullRequest
 
+from pydocteur.github_api import get_trad_team_members
 from pydocteur.pr_status import is_already_greeted
 from pydocteur.pr_status import is_first_time_contributor
 from pydocteur.settings import VERSION
-from pydocteur.github_api import get_trad_team_members
 
 COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../comment_bodies.json")
 
@@ -94,9 +94,8 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
 
 def maybe_greet_user(pr: PullRequest):
     if is_first_time_contributor(pr) and not is_already_greeted(pr):
-        return
-    bodies = get_comment_bodies("greetings")
-    body = random.choice(bodies)
-    body = replace_body_variables(pr, body)
-    logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
-    pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
+        bodies = get_comment_bodies("greetings")
+        body = random.choice(bodies)
+        body = replace_body_variables(pr, body)
+        logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
+        pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
