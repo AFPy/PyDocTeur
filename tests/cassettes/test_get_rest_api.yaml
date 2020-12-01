@@ -1,0 +1,106 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic UHlEb2NUZXVyOjA2YjUyYTIyZjMwODcwMWZmY2NhMzM3M2FhOTkzYThhY2QyNGMwMjI=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.0
+    method: GET
+    uri: https://api.github.com/repos/afpy/pydocteur
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 01 Dec 2020 14:19:22 GMT
+      ETag:
+      - W/"bb1b29f8c9d0e9bc79d0c532e77cb0d3374cfd267936b0a9e9ff8a118e8f93db"
+      Last-Modified:
+      - Tue, 01 Dec 2020 13:53:42 GMT
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      - Accept-Encoding
+      X-Accepted-OAuth-Scopes:
+      - repo
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-GitHub-Media-Type:
+      - github.v3; format=json
+      X-GitHub-Request-Id:
+      - DC29:1243:17A164D:1B29AFE:5FC650EA
+      X-OAuth-Scopes:
+      - admin:enterprise, admin:gpg_key, admin:org, admin:org_hook, admin:public_key,
+        admin:repo_hook, delete:packages, delete_repo, gist, notifications, repo,
+        user, workflow, write:discussion, write:packages
+      X-RateLimit-Limit:
+      - '5000'
+      X-RateLimit-Remaining:
+      - '4999'
+      X-RateLimit-Reset:
+      - '1606835962'
+      X-RateLimit-Used:
+      - '1'
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
