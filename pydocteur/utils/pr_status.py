@@ -1,9 +1,9 @@
-import datetime
 import logging
 import os
 
-import requests
-from requests.auth import HTTPBasicAuth
+from pydocteur.static import REPOSITORY_NAME
+from pydocteur.utils.github_api import get_graphql_api
+from pydocteur.utils.github_api import get_rest_api
 
 
 def get_checks_statuses_conclusions(pr):
@@ -11,15 +11,8 @@ def get_checks_statuses_conclusions(pr):
     commits_sha = [commit.sha for commit in pr.get_commits()]
     last_sha = commits_sha[-1]
     logging.debug(f"PR #{pr.number} last sha is {last_sha}")
-    resp = requests.get(
-        f"https://api.github.com/repos/{os.getenv('REPOSITORY_NAME')}/commits/{last_sha}/check-runs",
-        auth=HTTPBasicAuth(os.getenv("GH_USERNAME"), os.getenv("GH_TOKEN")),
-    )
-    if resp.status_code == 403:
-        reset_ts = resp.headers.get("X-Ratelimit-Reset")
-        logging.error(f"Rate limit reached, waiting until {reset_ts}")
-        while datetime.datetime.utcnow().timestamp() < int(reset_ts):
-            continue
+    logging.info(f"Getting runs for PR #{pr.number}")
+    resp = get_rest_api(f"https://api.github.com/repos/{REPOSITORY_NAME}/commits/{last_sha}/check-runs")
     runs = resp.json()["check_runs"]
     if not runs:
         logging.info(f"No runs for PR #{pr.number}.")
@@ -71,13 +64,7 @@ def is_first_time_contributor(pr):
         name,
         pr.number,
     )
-    headers = {"Authorization": "Bearer {}".format(os.getenv("GH_TOKEN"))}
-    resp = requests.post("https://api.github.com/graphql", json={"query": query}, headers=headers)
-    if resp.status_code == 403:
-        reset_ts = resp.headers.get("X-Ratelimit-Reset")
-        logging.error(f"Rate limit reached, waiting until {reset_ts}")
-        while datetime.datetime.utcnow().timestamp() < int(reset_ts):
-            continue
+    resp = get_graphql_api(query)
     results = resp.json()
     association = results["data"]["repository"]["pullRequest"]["authorAssociation"]
     return association == "FIRST_TIME_CONTRIBUTOR"

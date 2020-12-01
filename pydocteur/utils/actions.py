@@ -1,4 +1,6 @@
+import json
 import logging
+import os
 import random
 import time
 from functools import lru_cache
@@ -6,7 +8,10 @@ from pathlib import Path
 
 from github import PullRequest
 
-from pydocteur.utils.comment_body import get_comment_bodies
+from pydocteur.utils.github_api import get_trad_team_members
+
+COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../../comment_bodies.json")
+
 
 END_OF_BODY = """
 
@@ -42,10 +47,18 @@ def replace_body_variables(pr: PullRequest, body: str):
     reviewers_login = {review.user.login for review in pr.get_reviews()}
     new_body = body.replace("@$AUTHOR", "@" + author)
     if not reviewers_login:
-        reviewers_login = ["JulienPalard", "Seluj78"]
+        reviewers_login = get_trad_team_members()
     reviewers = ", @".join(reviewers_login)
     new_body = new_body.replace("@$REVIEWERS", "@" + reviewers)
     return new_body
+
+
+@lru_cache()
+def get_comment_bodies(state):
+    logging.debug(f"Getting comment bodies for {state}")
+    with open(COMMENT_BODIES_FILEPATH, "r") as handle:
+        bodies = json.load(handle).get(state)
+    return bodies
 
 
 def comment_pr(pr: PullRequest, state: str):
