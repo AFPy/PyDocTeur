@@ -8,7 +8,7 @@ from pathlib import Path
 
 from github import PullRequest
 
-from pydocteur.utils.github_api import get_trad_team_members
+from pydocteur.github_api import get_trad_team_members
 
 COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../../comment_bodies.json")
 

@@ -1,9 +1,9 @@
 import logging
 import os
 
+from pydocteur.github_api import get_graphql_api
+from pydocteur.github_api import get_rest_api
 from pydocteur.static import REPOSITORY_NAME
-from pydocteur.utils.github_api import get_graphql_api
-from pydocteur.utils.github_api import get_rest_api
 
 
 def get_checks_statuses_conclusions(pr):

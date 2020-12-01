@@ -5,17 +5,17 @@ from flask import jsonify
 from flask import request
 
 from pydocteur import application
+from pydocteur.actions import comment_pr
+from pydocteur.actions import greet_user
+from pydocteur.actions import merge_and_thank_contributors
+from pydocteur.actions import version
+from pydocteur.github_api import get_pull_request
+from pydocteur.pr_status import get_checks_statuses_conclusions
+from pydocteur.pr_status import is_already_greeted
+from pydocteur.pr_status import is_first_time_contributor
+from pydocteur.pr_status import is_label_set
+from pydocteur.pr_status import is_pr_approved
 from pydocteur.static import gh
-from pydocteur.utils.actions import comment_pr
-from pydocteur.utils.actions import greet_user
-from pydocteur.utils.actions import merge_and_thank_contributors
-from pydocteur.utils.actions import version
-from pydocteur.utils.github_api import get_pull_request
-from pydocteur.utils.pr_status import get_checks_statuses_conclusions
-from pydocteur.utils.pr_status import is_already_greeted
-from pydocteur.utils.pr_status import is_first_time_contributor
-from pydocteur.utils.pr_status import is_label_set
-from pydocteur.utils.pr_status import is_pr_approved
 
 
 def state_name(**kwargs):
