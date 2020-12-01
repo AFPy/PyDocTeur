@@ -36,6 +36,7 @@ jobs:
       - name: Install ${{ matrix.tool.name }}
         run: |
           python3 -m pip install --upgrade pip
+          python3 -m pip install --upgrade setuptools wheel
           python3 -m pip install ${{ matrix.tool.deps }}
       - name: Run ${{ matrix.tool.name }}
         run: |
