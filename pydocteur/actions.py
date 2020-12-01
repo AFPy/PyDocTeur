@@ -10,7 +10,7 @@ from github import PullRequest
 
 from pydocteur.github_api import get_trad_team_members
 
-COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../../comment_bodies.json")
+COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../comment_bodies.json")
 
 
 END_OF_BODY = """
@@ -38,7 +38,7 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 @lru_cache(maxsize=1)
 def version():
-    return (Path(__file__).parent.parent.parent / "VERSION").read_text()
+    return (Path(__file__).parent.parent / "VERSION").read_text()
 
 
 def replace_body_variables(pr: PullRequest, body: str):

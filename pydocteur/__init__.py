@@ -12,3 +12,5 @@ for var in REQUIRED_ENV_VARS:
         raise EnvironmentError(f"Missing {var} in environment")
 
 application = Flask(__name__)
+
+from pydocteur import route  # noqa
