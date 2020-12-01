@@ -21,6 +21,9 @@ def get_checks_statuses_conclusions(pr):
         while datetime.datetime.utcnow().timestamp() < int(reset_ts):
             continue
     runs = resp.json()["check_runs"]
+    if not runs:
+        logging.info(f"No runs for PR #{pr.number}.")
+        return False
     statuses = [run["status"] for run in runs if run["name"] != "check-title"]
     conclusions = [run["conclusion"] for run in runs if run["name"] != "check-title"]
     are_all_checks_done = all(status == "completed" for status in statuses)
