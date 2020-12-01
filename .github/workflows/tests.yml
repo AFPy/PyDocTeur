@@ -25,8 +25,8 @@ jobs:
 
     name: ${{ matrix.tool.name }}
     steps:
-      - name: Install ${{ matrix.tool.name }}
       - uses: actions/checkout@v2
+      - name: Install ${{ matrix.tool.name }}
         run: python3 -m pip install ${{ matrix.tool.name }}
       - name: Run ${{ matrix.tool.name }}
         run: ${{ matrix.tool.run }}
