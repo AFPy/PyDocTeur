@@ -13,13 +13,6 @@ def test_is_pr_approved(pr_number, approved):
 
 
 @pytest.mark.vcr()
-def test_is_pr_unapproved():
-    gh = Github()
-    pr = gh.get_repo("python/python-docs-fr").get_pull(1452)
-    assert not is_pr_approved(pr)
-
-
-@pytest.mark.vcr()
 def test_is_pr_tests_failed():
     gh = Github()
     pr = gh.get_repo("python/python-docs-fr").get_pull(1475)
