@@ -24,7 +24,7 @@ jobs:
             deps: black
           - name: pytest
             run: pytest
-            deps: pytest pytest-vcr
+            deps: pytest pytest-vcr -r requirements.txt
 
     name: ${{ matrix.tool.name }}
     steps:
