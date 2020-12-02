@@ -8,9 +8,10 @@ from flask import request
 from pydocteur.actions import comment_pr
 from pydocteur.actions import maybe_greet_user
 from pydocteur.actions import merge_and_thank_contributors
-from pydocteur.github_api import get_pull_request, has_pr_number
-from pydocteur.settings import VERSION
+from pydocteur.github_api import get_pull_request
+from pydocteur.github_api import has_pr_number
 from pydocteur.pr_status import get_pr_state
+from pydocteur.settings import VERSION
 
 application = Flask(__name__)
 
@@ -25,10 +26,7 @@ logger.info("************************************************************")
 def process_incoming_payload():
 
     if request.method == "GET":
-        return (
-            jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}),
-            200,
-        )
+        return (jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}), 200)
 
     payload = json.loads(request.data)
 
@@ -44,7 +42,7 @@ def process_incoming_payload():
         return "OK", 200
     pr = get_pull_request(payload)
     if not pr:
-        logger.info("Payload received corresponds to issue or PR not found, ignoring.")
+        logger.info("Payload received from checks, issue or unknown, ignoring.")
         return "OK", 200
     if pr.is_merged():
         logger.info(f"PR {pr.number} is merged, ignoring.")
@@ -60,7 +58,7 @@ def process_incoming_payload():
 
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
-        logger.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
+        logger.info(f"State of PR #{pr.number} hasn't changed, ignoring. (state: {state})")
         return "OK", 200
 
     state_dict = {
