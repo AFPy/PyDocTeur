@@ -20,7 +20,6 @@ def test_get_pr_from_check_run():
             "completed_at": "2020-12-02T16:05:22Z",
             "output": {
                 "annotations_count": 0,
-                "annotations_url": "https://api.github.com/repos/python/python-docs-fr/check-runs/1487327954/annotations",
             },
         },
     }
