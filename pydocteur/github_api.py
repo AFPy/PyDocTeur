@@ -9,7 +9,7 @@ from pydocteur.settings import GH_USERNAME
 from pydocteur.settings import REPOSITORY_NAME
 
 logger = logging.getLogger("pydocteur")
-gh = Github(GH_TOKEN)
+gh = Github(GH_TOKEN if GH_TOKEN else None)
 
 
 def get_rest_api(url: str) -> requests.Response:
@@ -24,7 +24,7 @@ def get_graphql_api(query: str) -> requests.Response:
 
 
 def get_pull_request_from_check_run(commit_sha):
-    prs_for_commit = gh.search_issues(f"type:pr+repo:{REPOSITORY_NAME}+sha:{commit_sha}")
+    prs_for_commit = gh.search_issues(f"type:pr repo:{REPOSITORY_NAME} sha:{commit_sha}")
     if prs_for_commit.totalCount != 1:
         logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
     return prs_for_commit[0]
