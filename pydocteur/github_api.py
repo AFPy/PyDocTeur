@@ -23,7 +23,7 @@ def get_graphql_api(query: str) -> requests.Response:
     return resp
 
 
-def get_pull_request_from_check_run(commit_sha):
+def get_pull_request_from_checks(commit_sha):
     prs_for_commit = gh.search_issues(f"type:pr repo:{REPOSITORY_NAME} sha:{commit_sha}")
     if prs_for_commit.totalCount != 1:
         logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
@@ -34,9 +34,9 @@ def get_pull_request(payload):
     gh_repo = gh.get_repo(REPOSITORY_NAME)
     logger.info("Trying to find PR from %s", payload.get("action", "A payload with: " + ", ".join(payload.keys())))
 
-    head_sha = payload.get("check_run", {}).get("head_sha")
+    head_sha = payload.get("check_suite", {}).get("head_sha")
     if head_sha:
-        return get_pull_request_from_check_run(head_sha)
+        return get_pull_request_from_checks(head_sha)
 
     pr_number = payload.get("pull_request", {}).get("number")
     if pr_number:

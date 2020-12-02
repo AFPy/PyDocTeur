@@ -3,10 +3,10 @@ from pydocteur.github_api import get_pull_request
 
 
 @pytest.mark.vcr()
-def test_get_pr_from_check_run():
+def test_get_pr_from_check_suite():
     payload = {
         "action": "completed",
-        "check_run": {
+        "check_suite": {
             "id": 1487327954,
             "node_id": "MDg6Q2hlY2tSdW4xNDg3MzI3OTU0",
             "head_sha": "390a392633a4692ee96ebd8d122cfdcd602224e0",
