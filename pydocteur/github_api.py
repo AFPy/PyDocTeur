@@ -20,7 +20,7 @@ def get_pull_request_from_checks(commit_sha):
     prs_for_commit = gh.search_issues(f"type:pr repo:{REPOSITORY_NAME} sha:{commit_sha}")
     if prs_for_commit.totalCount != 1:
         logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
-    return prs_for_commit[0]
+    return gh.get_repo(REPOSITORY_NAME).get_pull(prs_for_commit[0].number)
 
 
 def get_pull_request(payload):
