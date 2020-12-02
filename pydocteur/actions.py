@@ -47,6 +47,7 @@ def replace_body_variables(pr: PullRequest, body: str):
     new_body = body.replace("@$AUTHOR", "@" + author)
     if not reviewers_login:
         reviewers_login = get_trad_team_members()
+    reviewers_login.discard(author)
     reviewers = ", @".join(reviewers_login)
     new_body = new_body.replace("@$REVIEWERS", "@" + reviewers)
     return new_body

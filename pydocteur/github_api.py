@@ -57,9 +57,9 @@ def get_pull_request(payload):
     return gh_repo.get_pull(pr_number)
 
 
-def get_trad_team_members():
+def get_trad_team_members() -> set:
     logger.debug("Getting default reviewers from team members")
-    return [user.login for user in gh.get_organization("afpy").get_team_by_slug("traduction").get_members()]
+    return {user.login for user in gh.get_organization("afpy").get_team_by_slug("traduction").get_members()}
 
 
 def has_pr_number(payload) -> bool:
