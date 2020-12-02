@@ -50,7 +50,7 @@ def is_pr_approved(pr):
     last_reviews = []
     for author, reviews in groupby(sorted(pr_reviews, key=sort_reviews_key), key=sort_reviews_key):
         last_reviews.append(list(reviews)[-1])
-    is_approved = any(review.state == "APPROVED" for review in last_reviews)
+    is_approved = all(review.state == "APPROVED" for review in last_reviews)
     logger.info(f"is_approved for PR #{pr.number} is {is_approved}")
     return is_approved
 
