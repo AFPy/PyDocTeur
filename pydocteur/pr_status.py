@@ -1,27 +1,18 @@
-from itertools import groupby
 import logging
 import os
+from itertools import groupby
 
 from pydocteur.github_api import get_graphql_api
-from pydocteur.github_api import get_rest_api
-from pydocteur.settings import REPOSITORY_NAME
 
 logger = logging.getLogger("pydocteur")
 
 
-def get_checks_statuses_conclusions(pr):
+def is_pr_tests_passed(pr):
     logger.info(f"Checking PR #{pr.number} CI results")
-    commits_sha = [commit.sha for commit in pr.get_commits()]
-    last_sha = commits_sha[-1]
-    logger.debug(f"PR #{pr.number} last sha is {last_sha}")
-    logger.info(f"Getting runs for PR #{pr.number}")
-    resp = get_rest_api(f"https://api.github.com/repos/{REPOSITORY_NAME}/commits/{last_sha}/check-runs")
-    runs = resp.json()["check_runs"]
-    if not runs:
-        logger.info(f"No runs for PR #{pr.number}.")
-        return False
-    statuses = [run["status"] for run in runs]
-    conclusions = [run["conclusion"] for run in runs]
+    last_commit = [commit for commit in pr.get_commits()][-1]
+    check_suites = last_commit.get_check_suites()
+    statuses = [suite.status for suite in check_suites]
+    conclusions = [suite.conclusion for suite in check_suites]
     are_all_checks_done = all(status == "completed" for status in statuses)
     if are_all_checks_done:
         logger.info(f"PR #{pr.number} checks are done, checking conclusions")
@@ -109,6 +100,6 @@ def get_pr_state(pr) -> str:
     return state_name(
         automerge=is_label_set(pr, "🤖 automerge"),
         approved=is_pr_approved(pr),
-        testok=get_checks_statuses_conclusions(pr),
+        testok=is_pr_tests_passed(pr),
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
     )

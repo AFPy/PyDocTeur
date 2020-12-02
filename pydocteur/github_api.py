@@ -1,20 +1,13 @@
 import logging
 
 import requests
-from requests.auth import HTTPBasicAuth
 from github import Github
 
 from pydocteur.settings import GH_TOKEN
-from pydocteur.settings import GH_USERNAME
 from pydocteur.settings import REPOSITORY_NAME
 
 logger = logging.getLogger("pydocteur")
 gh = Github(GH_TOKEN if GH_TOKEN else None)
-
-
-def get_rest_api(url: str) -> requests.Response:
-    resp = requests.get(url, auth=HTTPBasicAuth(GH_USERNAME, GH_TOKEN))
-    return resp
 
 
 def get_graphql_api(query: str) -> requests.Response:
