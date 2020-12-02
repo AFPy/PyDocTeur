@@ -19,8 +19,8 @@ def get_checks_statuses_conclusions(pr):
     if not runs:
         logger.info(f"No runs for PR #{pr.number}.")
         return False
-    statuses = [run["status"] for run in runs if run["name"] != "check-title"]
-    conclusions = [run["conclusion"] for run in runs if run["name"] != "check-title"]
+    statuses = [run["status"] for run in runs]
+    conclusions = [run["conclusion"] for run in runs]
     are_all_checks_done = all(status == "completed" for status in statuses)
     if are_all_checks_done:
         logger.info(f"PR #{pr.number} checks are done, checking conclusions")
@@ -79,6 +79,9 @@ def is_already_greeted(pr):
 
 def state_name(**kwargs):
     SIMPLIFICATIONS = {
+        "testok": "",
+        "approved_testok": "approved",
+        "automerge_testok": "automerge",
         "testok_donotmerge": "donotmerge",
         "approved_testok_donotmerge": "donotmerge",
         "automerge_testok_donotmerge": "automerge_donotmerge",
