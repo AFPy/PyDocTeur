@@ -2,7 +2,6 @@ import logging
 
 import requests
 from requests.auth import HTTPBasicAuth
-from github import GithubException
 from github import Github
 
 from pydocteur.settings import GH_TOKEN
@@ -24,37 +23,31 @@ def get_graphql_api(query: str) -> requests.Response:
     return resp
 
 
+def get_pull_request_from_check_run(commit_sha):
+    prs_for_commit = await gh.search_issues(f"type:pr+repo:{REPOSITORY_NAME}+sha:{commit_sha}")
+    if prs_for_commit.totalCount != 1:
+        logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
+    return prs_for_commit[0]
+
+
 def get_pull_request(payload):
-    logger.debug("Getting repository")
     gh_repo = gh.get_repo(REPOSITORY_NAME)
-    logger.info("Trying to find PR number from payload")
+    logger.info("Trying to find PR from %s", payload.get("action", "A payload with: " + ", ".join(payload.keys())))
 
-    is_run = payload.get("check_run", False)
-    is_suite = payload.get("check_suite", False)
+    head_sha = payload.get("check_run", {}).get("head_sha")
+    if head_sha:
+        return get_pull_request_from_check_run(head_sha)
 
-    if is_run or is_suite:
-        logger.info("Payload is from checks, ignoring")
-        return None
+    pr_number = payload.get("pull_request", {}).get("number")
+    if pr_number:
+        return gh_repo.get_pull(pr_number)
 
-    try:
-        try:
-            pr_number = payload["pull_request"]["number"]
-            logger.debug(f"Found PR {pr_number} first try")
-        except KeyError:
-            issue_number = payload["issue"]["number"]
-            logger.debug(f"Found issue {issue_number} from payload")
-            try:
-                repo = gh_repo.get_pull(issue_number)
-                logger.info(f"Found PR #{repo.number}")
-                return repo
-            except GithubException:
-                logger.debug(f"Found issue {issue_number}, returning None")
-                return None
-    except Exception:  # noqa
-        logger.warning("Unknown payload, returning None")
-        logger.debug(payload)
-        return None
-    return gh_repo.get_pull(pr_number)
+    issue_number = payload.get("issue", {}).get("number")
+    if issue_number:
+        return gh_repo.get_pull(issue_number)
+
+    logger.warning("Unknown payload, (action: %s)", payload.get("action", ""))
+    return None
 
 
 def get_trad_team_members() -> set:

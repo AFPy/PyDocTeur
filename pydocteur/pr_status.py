@@ -48,12 +48,14 @@ def is_pr_approved(pr):
         return review.user.login, review.submitted_at
 
     last_reviews = []
-    for author, reviews in groupby(sorted(pr_reviews, key=sort_reviews_key), key=lambda review: review.user.login):
+    for _, reviews in groupby(sorted(pr_reviews, key=sort_reviews_key), key=lambda review: review.user.login):
         last_reviews.append(list(reviews)[-1])
     is_approved = all(review.state == "APPROVED" for review in last_reviews)
     logger.info(
-        f"is_approved for PR #{pr.number} is {is_approved}: "
-        + ", ".join(f"{review.user.login} has {review.state}" for review in last_reviews)
+        "is_pr_approved(%s): %s (%s)",
+        pr.number,
+        is_approved,
+        ", ".join(f"{review.user.login} has {review.state}" for review in last_reviews),
     )
     return is_approved
 
