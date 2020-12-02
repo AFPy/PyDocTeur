@@ -3,3 +3,4 @@ black
 reorder-python-imports
 pre-commit
 pytest
+pytest-vcr
