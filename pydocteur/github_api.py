@@ -9,7 +9,7 @@ from pydocteur.settings import GH_TOKEN
 from pydocteur.settings import GH_USERNAME
 from pydocteur.settings import REPOSITORY_NAME
 
-
+logger = logging.getLogger("pydocteur")
 gh = Github(GH_TOKEN)
 
 
@@ -25,40 +25,40 @@ def get_graphql_api(query: str) -> requests.Response:
 
 
 def get_pull_request(payload):
-    logging.debug("Getting repository")
+    logger.debug("Getting repository")
     gh_repo = gh.get_repo(REPOSITORY_NAME)
-    logging.info("Trying to find PR number from payload")
+    logger.info("Trying to find PR number from payload")
 
     is_run = payload.get("check_run", False)
     is_suite = payload.get("check_suite", False)
 
     if is_run or is_suite:
-        logging.info("Payload is from checks, ignoring")
+        logger.info("Payload is from checks, ignoring")
         return None
 
     try:
         try:
             pr_number = payload["pull_request"]["number"]
-            logging.debug(f"Found PR {pr_number} first try")
+            logger.debug(f"Found PR {pr_number} first try")
         except KeyError:
             issue_number = payload["issue"]["number"]
-            logging.debug(f"Found issue {issue_number} from payload")
+            logger.debug(f"Found issue {issue_number} from payload")
             try:
                 repo = gh_repo.get_pull(issue_number)
-                logging.info(f"Found PR #{repo.number}")
+                logger.info(f"Found PR #{repo.number}")
                 return repo
             except GithubException:
-                logging.debug(f"Found issue {issue_number}, returning None")
+                logger.debug(f"Found issue {issue_number}, returning None")
                 return None
     except Exception:  # noqa
-        logging.warning("Unknown payload, returning None")
-        logging.debug(payload)
+        logger.warning("Unknown payload, returning None")
+        logger.debug(payload)
         return None
     return gh_repo.get_pull(pr_number)
 
 
 def get_trad_team_members():
-    logging.debug("Getting default reviewers from team members")
+    logger.debug("Getting default reviewers from team members")
     return [user.login for user in gh.get_organization("afpy").get_team_by_slug("traduction").get_members()]
 
 

@@ -12,6 +12,8 @@ from pydocteur.pr_status import is_already_greeted
 from pydocteur.pr_status import is_first_time_contributor
 from pydocteur.settings import VERSION
 
+logger = logging.getLogger("pydocteur")
+
 COMMENT_BODIES_FILEPATH = os.path.join(os.path.dirname(__file__), "../comment_bodies.json")
 
 
@@ -39,7 +41,7 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 
 
 def replace_body_variables(pr: PullRequest, body: str):
-    logging.debug("Replacing variables")
+    logger.debug("Replacing variables")
     author = pr.user.login
     reviewers_login = {review.user.login for review in pr.get_reviews()}
     new_body = body.replace("@$AUTHOR", "@" + author)
@@ -52,7 +54,7 @@ def replace_body_variables(pr: PullRequest, body: str):
 
 @lru_cache()
 def get_comment_bodies(state):
-    logging.debug(f"Getting comment bodies for {state}")
+    logger.debug(f"Getting comment bodies for {state}")
     with open(COMMENT_BODIES_FILEPATH, "r") as handle:
         bodies = json.load(handle).get(state)
     return bodies
@@ -61,32 +63,32 @@ def get_comment_bodies(state):
 def comment_pr(pr: PullRequest, state: str):
     bodies = get_comment_bodies(state)
     if not bodies:
-        logging.warning(f"PR #{pr.number}: No comment for state {state}")
+        logger.warning(f"PR #{pr.number}: No comment for state {state}")
         return
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
-    logging.info(f"PR #{pr.number}: Commenting.")
+    logger.info(f"PR #{pr.number}: Commenting.")
     pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
-    logging.info(f"PR #{pr.number}: About to merge")
+    logger.info(f"PR #{pr.number}: About to merge")
     warnings = get_comment_bodies("automerge_approved_testok")
     thanks = get_comment_bodies("automerge_approved_testok-done")
 
-    logging.info(f"PR #{pr.number}: Sending warning before merge")
+    logger.info(f"PR #{pr.number}: Sending warning before merge")
     warning_body = random.choice(warnings)
     warning_body = replace_body_variables(pr, warning_body)
     pr.create_issue_comment(warning_body + END_OF_BODY.format(state=state, version=VERSION))
 
-    logging.debug(f"PR #{pr.number}: Sleeping one second")
+    logger.debug(f"PR #{pr.number}: Sleeping one second")
     time.sleep(1)
 
     # TODO: Custom commit message/title with nice infos and saying it's auto merged.
     pr.merge(merge_method="squash", commit_message="")
-    logging.info(f"PR #{pr.number}: Merged.")
+    logger.info(f"PR #{pr.number}: Merged.")
 
-    logging.info(f"PR #{pr.number}: Sending thanks after merge")
+    logger.info(f"PR #{pr.number}: Sending thanks after merge")
     thanks_body = random.choice(thanks)
     thanks_body = replace_body_variables(pr, thanks_body)
     pr.create_issue_comment(thanks_body + END_OF_BODY.format(state=state, version=VERSION))
@@ -97,5 +99,5 @@ def maybe_greet_user(pr: PullRequest):
         bodies = get_comment_bodies("greetings")
         body = random.choice(bodies)
         body = replace_body_variables(pr, body)
-        logging.info(f"PR #{pr.number}: Greeting {pr.user.login}")
+        logger.info(f"PR #{pr.number}: Greeting {pr.user.login}")
         pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
