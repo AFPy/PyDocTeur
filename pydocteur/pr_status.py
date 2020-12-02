@@ -30,7 +30,7 @@ def is_label_set(pr, label: str):
 
 def is_pr_approved(pr):
     logger.info(f"Checking if PR #{pr.number} is approved")
-    pr_reviews = [review for review in pr.get_reviews() if review.state != "COMMENTED"]
+    pr_reviews = [review for review in pr.get_reviews() if review.state not in ("COMMENTED", "DISMISSED")]
     if not pr_reviews:
         logger.info(f"No reviews for PR {pr.number}")
         return False
