@@ -14,6 +14,12 @@ from pydocteur.pr_status import get_pr_state
 
 application = Flask(__name__)
 
+logger = logging.getLogger("pydocteur")
+
+logger.info("************************************************************")
+logger.info("************ Starting new instance of PyDocTeur ************")
+logger.info("************************************************************")
+
 
 @application.route("/", methods=["POST", "GET"])
 def process_incoming_payload():
@@ -27,34 +33,34 @@ def process_incoming_payload():
     payload = json.loads(request.data)
 
     if payload["sender"]["login"] == "PyDocTeur":
-        logging.info("Received payload sent from PyDocTeur user, ignoring.")
+        logger.info("Received payload sent from PyDocTeur user, ignoring.")
         return "OK", 200
     # If pull request just got opened
     if "action" not in payload:
-        logging.info("Received payload from refs updating, ignoring.")
+        logger.info("Received payload from refs updating, ignoring.")
         return "OK", 200
     if payload["action"] == "opened" and not has_pr_number(payload):
-        logging.info("Received payload from opened PR, ignoring.")
+        logger.info("Received payload from opened PR, ignoring.")
         return "OK", 200
     pr = get_pull_request(payload)
     if not pr:
-        logging.info("Payload received corresponds to issue or PR not found, ignoring.")
+        logger.info("Payload received corresponds to issue or PR not found, ignoring.")
         return "OK", 200
     if pr.is_merged():
-        logging.info(f"PR {pr.number} is merged, ignoring.")
+        logger.info(f"PR {pr.number} is merged, ignoring.")
         return "OK", 200
     if pr.closed_at:
-        logging.info(f"PR {pr.number} is closed, ignoring.")
+        logger.info(f"PR {pr.number} is closed, ignoring.")
         return "OK", 200
     if payload["action"] == "labeled" and payload.get("label", {}).get("name") == "Title needs formatting.":
-        logging.info(f"PR {pr.number}: Received from Action PR Title checker, ignoring")
+        logger.info(f"PR {pr.number}: Received from Action PR Title checker, ignoring")
         return "OK", 200
     state = get_pr_state(pr)
-    logging.info(f"State of PR #{pr.number} is {state}")
+    logger.info(f"State of PR #{pr.number} is {state}")
 
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
-        logging.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
+        logger.info(f"State of PR #{pr.number} hasn't changed, ignoring.")
         return "OK", 200
 
     state_dict = {
