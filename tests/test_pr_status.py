@@ -6,10 +6,10 @@ from pydocteur.pr_status import is_pr_tests_passed
 
 
 @pytest.mark.vcr()
-def test_is_pr_approved():
+@pytest.mark.parametrize("pr_number, approved", [(1451, True), (1490, True), (1452, False)])
+def test_is_pr_approved(pr_number, approved):
     gh = Github()
-    pr = gh.get_repo("python/python-docs-fr").get_pull(1451)
-    assert is_pr_approved(pr)
+    assert is_pr_approved(gh.get_repo("python/python-docs-fr").get_pull(pr_number)) is approved
 
 
 @pytest.mark.vcr()
