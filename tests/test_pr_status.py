@@ -1,6 +1,7 @@
 import pytest
 from github import Github
 
+from pydocteur.pr_status import is_label_set
 from pydocteur.pr_status import is_pr_approved
 from pydocteur.pr_status import is_pr_tests_passed
 
@@ -24,3 +25,11 @@ def test_is_pr_tests_success():
     gh = Github()
     pr = gh.get_repo("python/python-docs-fr").get_pull(1485)
     assert is_pr_tests_passed(pr)
+
+
+@pytest.mark.vcr()
+def test_is_label_set():
+    gh = Github()
+    pr = gh.get_repo("python/python-docs-fr").get_pull(1485)
+    assert is_label_set(pr, "🤖 automerge")
+    assert not is_label_set(pr, "DO NOT MERGE")
