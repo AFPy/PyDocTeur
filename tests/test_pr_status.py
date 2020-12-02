@@ -17,3 +17,10 @@ def test_is_pr_tests_failed():
     gh = Github()
     pr = gh.get_repo("python/python-docs-fr").get_pull(1487)
     assert not is_pr_tests_passed(pr)
+
+
+@pytest.mark.vcr()
+def test_is_pr_tests_success():
+    gh = Github()
+    pr = gh.get_repo("python/python-docs-fr").get_pull(1485)
+    assert is_pr_tests_passed(pr)
