@@ -14,6 +14,19 @@ def test_is_pr_approved(pr_number, approved):
 
 
 @pytest.mark.vcr()
+def test_is_pr_unapproved():
+    gh = Github()
+    pr1 = gh.get_repo("python/python-docs-fr").get_pull(1452)
+    pr2 = gh.get_repo("python/python-docs-fr").get_pull(1423)
+    pr3 = gh.get_repo("python/python-docs-fr").get_pull(1478)
+    pr4 = gh.get_repo("python/python-docs-fr").get_pull(1436)
+    assert not is_pr_approved(pr1)
+    assert not is_pr_approved(pr2)
+    assert not is_pr_approved(pr3)
+    assert not is_pr_approved(pr4)
+
+
+@pytest.mark.vcr()
 def test_is_pr_tests_failed():
     gh = Github()
     pr = gh.get_repo("python/python-docs-fr").get_pull(1487)
@@ -33,3 +46,25 @@ def test_is_label_set():
     pr = gh.get_repo("python/python-docs-fr").get_pull(1485)
     assert is_label_set(pr, "🤖 automerge")
     assert not is_label_set(pr, "DO NOT MERGE")
+
+
+# @pytest.mark.vcr()
+# def test_state():
+#     gh = Github()
+#     pr = gh.get_repo("python/python-docs-fr").get_pull(1485)
+
+
+# COMMENTED BECAUSE GRAPHQL NEEDS AUTH
+
+# @pytest.mark.vcr()
+# def test_is_first_time_contributor():
+#     gh = Github()
+#     pr = gh.get_repo("pydocteur/fake-docs").get_pull(13)
+#     assert is_first_time_contributor(pr)
+#
+#
+# @pytest.mark.vcr()
+# def test_is_not_first_time_contributor():
+#     gh = Github()
+#     pr = gh.get_repo("python/python-docs-fr").get_pull(1452)
+#     assert not is_first_time_contributor(pr)
