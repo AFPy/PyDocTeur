@@ -42,8 +42,12 @@ def is_pr_approved(pr):
     if pr_reviews.totalCount == 0:
         logger.info(f"No reviews for PR {pr.number}")
         return False
-    is_approved = any(review.state == "APPROVED" for review in pr_reviews)
-    logger.info(f"is_approved for PR #{pr.number} is {is_approved}")
+    is_approved = all(review.state == "APPROVED" for review in pr_reviews)
+    logger.info(
+        f"PR #{pr.number} has {len(pr_reviews)} reviews "
+        f"({', '.join(review.state for review in pr_reviews)}) "
+        f"so it's {'approved' if is_approved else 'not approved'}."
+    )
     return is_approved
 
 
