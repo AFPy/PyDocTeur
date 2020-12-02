@@ -1,3 +1,4 @@
+from itertools import groupby
 import logging
 import os
 
@@ -38,12 +39,22 @@ def is_label_set(pr, label: str):
 
 def is_pr_approved(pr):
     logger.info(f"Checking if PR #{pr.number} is approved")
-    pr_reviews = pr.get_reviews()
-    if pr_reviews.totalCount == 0:
+    pr_reviews = [review for review in pr.get_reviews() if review.state != "COMMENTED"]
+    if not pr_reviews:
         logger.info(f"No reviews for PR {pr.number}")
         return False
-    is_approved = any(review.state == "APPROVED" for review in pr_reviews)
-    logger.info(f"is_approved for PR #{pr.number} is {is_approved}")
+
+    def sort_reviews_key(review):
+        return review.user.login, review.submitted_at
+
+    last_reviews = []
+    for author, reviews in groupby(sorted(pr_reviews, key=sort_reviews_key), key=lambda review: review.user.login):
+        last_reviews.append(list(reviews)[-1])
+    is_approved = all(review.state == "APPROVED" for review in last_reviews)
+    logger.info(
+        f"is_approved for PR #{pr.number} is {is_approved}: "
+        + ", ".join(f"{review.user.login} has {review.state}" for review in last_reviews)
+    )
     return is_approved
 
 

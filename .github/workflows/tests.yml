@@ -1,0 +1,46 @@
+name: Test
+
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tool:
+          - name: flake8
+            run: flake8
+            deps: flake8
+          - name: black
+            run: black --check --diff
+            deps: black
+          - name: pytest
+            run: pytest
+            deps: pytest pytest-vcr -r requirements.txt
+
+    name: ${{ matrix.tool.name }}
+    steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            $HOME/.local/
+            $HOME/.cache/
+          key: 1
+      - uses: actions/checkout@v2
+      - name: Install ${{ matrix.tool.name }}
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --upgrade setuptools wheel
+          python3 -m pip install ${{ matrix.tool.deps }}
+      - name: Run ${{ matrix.tool.name }}
+        run: |
+          PATH="$PATH:$HOME/.local/bin/"
+          ${{ matrix.tool.run }}
