@@ -7,7 +7,7 @@ from pydocteur.github_api import get_graphql_api
 logger = logging.getLogger("pydocteur")
 
 
-def get_checks_statuses_conclusions(pr):
+def is_pr_tests_passed(pr):
     logger.info(f"Checking PR #{pr.number} CI results")
     last_commit = [commit for commit in pr.get_commits()][-1]
     check_suites = last_commit.get_check_suites()
@@ -100,6 +100,6 @@ def get_pr_state(pr) -> str:
     return state_name(
         automerge=is_label_set(pr, "🤖 automerge"),
         approved=is_pr_approved(pr),
-        testok=get_checks_statuses_conclusions(pr),
+        testok=is_pr_tests_passed(pr),
         donotmerge=is_label_set(pr, "DO NOT MERGE"),
     )
