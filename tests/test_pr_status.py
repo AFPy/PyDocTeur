@@ -3,6 +3,7 @@ import os
 import pytest
 from github import Github
 
+from pydocteur.pr_status import is_already_greeted
 from pydocteur.pr_status import is_first_time_contributor
 from pydocteur.pr_status import is_label_set
 from pydocteur.pr_status import is_pr_approved
@@ -45,3 +46,10 @@ def test_is_label_set():
 def test_is_first_time_contributor(pr_number, is_firsttime):
     gh = Github()
     assert is_first_time_contributor(gh.get_repo("pydocteur/fake-docs").get_pull(pr_number)) is is_firsttime
+
+
+@pytest.mark.vcr()
+@pytest.mark.parametrize("pr_number, is_greeted", [(13, True), (17, False)])
+def test_is_already_greeted(pr_number, is_greeted):
+    gh = Github()
+    assert is_already_greeted(gh.get_repo("pydocteur/fake-docs").get_pull(pr_number)) is is_greeted
