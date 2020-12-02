@@ -3,6 +3,7 @@ import os
 import pytest
 from github import Github
 
+from pydocteur.pr_status import is_first_time_contributor
 from pydocteur.pr_status import is_label_set
 from pydocteur.pr_status import is_pr_approved
 from pydocteur.pr_status import is_pr_tests_passed
@@ -39,23 +40,8 @@ def test_is_label_set():
     assert not is_label_set(pr, "DO NOT MERGE")
 
 
-# @pytest.mark.vcr()
-# def test_state():
-#     gh = Github()
-#     pr = gh.get_repo(REPOSITORY_NAME).get_pull(1485)
-
-
-# COMMENTED BECAUSE GRAPHQL NEEDS AUTH
-
-# @pytest.mark.vcr()
-# def test_is_first_time_contributor():
-#     gh = Github()
-#     pr = gh.get_repo("pydocteur/fake-docs").get_pull(13)
-#     assert is_first_time_contributor(pr)
-#
-#
-# @pytest.mark.vcr()
-# def test_is_not_first_time_contributor():
-#     gh = Github()
-#     pr = gh.get_repo(REPOSITORY_NAME).get_pull(1452)
-#     assert not is_first_time_contributor(pr)
+@pytest.mark.vcr()
+@pytest.mark.parametrize("pr_number, is_firsttime", [(13, True), (17, False)])
+def test_is_first_time_contributor(pr_number, is_firsttime):
+    gh = Github()
+    assert is_first_time_contributor(gh.get_repo("pydocteur/fake-docs").get_pull(pr_number)) is is_firsttime
