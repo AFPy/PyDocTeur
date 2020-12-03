@@ -23,7 +23,7 @@ jobs:
             run: black --check --diff
             deps: black
           - name: pytest
-            run: pytest
+            run: pytest -v
             deps: pytest pytest-vcr -r requirements.txt
 
     name: ${{ matrix.tool.name }}
