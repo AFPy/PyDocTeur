@@ -7,6 +7,7 @@ from functools import lru_cache
 
 from github import PullRequest
 
+from pydocteur.github_api import get_title_message_for_merge
 from pydocteur.github_api import get_trad_team_members
 from pydocteur.pr_status import is_already_greeted
 from pydocteur.pr_status import is_first_time_contributor
@@ -86,7 +87,8 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     time.sleep(1)
 
     # TODO: Custom commit message/title with nice infos and saying it's auto merged.
-    pr.merge(merge_method="squash", commit_message="")
+    title, message = get_title_message_for_merge(pr)
+    pr.merge(merge_method="squash", commit_title=title, commit_message=message)
     logger.info(f"PR #{pr.number}: Merged.")
 
     logger.info(f"PR #{pr.number}: Sending thanks after merge")
