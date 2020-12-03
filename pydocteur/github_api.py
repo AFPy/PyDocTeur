@@ -75,10 +75,7 @@ def get_coauthors(pr) -> set:
 
 
 def get_issues_to_close(body):
-    if not body or body == "":
-        return []
-    results = re.findall("(?:close[sd]?|fix|fixe[sd]|resolve[sd]?)\\s+(#\\d+)", body, flags=re.IGNORECASE)
-    return results
+    return re.findall(r"(?:close[sd]?|fix|fixe[sd]|resolve[sd]?)\s+(#\d+)", body or "", flags=re.IGNORECASE)
 
 
 def get_commit_message_for_merge(pr):
