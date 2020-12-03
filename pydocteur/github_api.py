@@ -81,7 +81,7 @@ def get_issues_to_close(body):
     return results
 
 
-def get_title_message_for_merge(pr):
+def get_commit_message_for_merge(pr):
     logger.info(f"Generating title and message for merge of PR #{pr.number}")
     co_authors = get_coauthors(pr)
     closing_issues = get_issues_to_close(pr.body)
@@ -89,8 +89,7 @@ def get_title_message_for_merge(pr):
     fixes = "Closes ".join(closing_issues)
     coauthors = "\n".join(co_authors)
 
-    title = "Automerge of PR #{pr_number} by @{author}".format(pr_number=pr.number, author=pr.user.login)
-    message = title
+    message = "Automerge of PR #{pr_number} by @{author}".format(pr_number=pr.number, author=pr.user.login)
     if fixes or fixes != "":
         message = message + "\n{fixes}".format(fixes=fixes)
     if coauthors or coauthors != "":
@@ -98,4 +97,4 @@ def get_title_message_for_merge(pr):
     if pr.body or pr.body != "":
         message = message + "\n\n{body}".format(body=pr.body)
 
-    return title, message
+    return message
