@@ -89,9 +89,8 @@ def get_commit_message_for_merge(pr):
     message = "Automerge of PR #{pr_number} by @{author}".format(pr_number=pr.number, author=pr.user.login)
     if fixes:
         message = message + "\n{fixes}".format(fixes=fixes)
-    if coauthors:
-        message = message + "\n\n{coauthors}".format(coauthors=coauthors)
     if pr.body:
         message = message + "\n\n{body}".format(body=pr.body)
-
+    if coauthors:
+        message = message + "\n\n{coauthors}".format(coauthors=coauthors)
     return message
