@@ -10,7 +10,7 @@ logger = logging.getLogger("pydocteur")
 def is_pr_tests_passed(pr):
     logger.info(f"Checking PR #{pr.number} CI results")
     last_commit = [commit for commit in pr.get_commits()][-1]
-    check_suites = last_commit.get_check_suites()
+    check_suites = [suite for suite in last_commit.get_check_suites() if suite.app.name == "GitHub Actions"]
     statuses = [suite.status for suite in check_suites]
     conclusions = [suite.conclusion for suite in check_suites]
     are_all_checks_done = all(status == "completed" for status in statuses)
