@@ -18,7 +18,7 @@ application = Flask(__name__)
 logger = logging.getLogger("pydocteur")
 
 logger.info("************************************************************")
-logger.info("************ Starting new instance of PyDocTeur ************")
+logger.info(f"****** Starting new instance of PyDocTeur {VERSION} *******")
 logger.info("************************************************************")
 
 
