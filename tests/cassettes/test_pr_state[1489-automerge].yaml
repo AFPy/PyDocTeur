@@ -1,0 +1,702 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA+1YUW/iOBD+K1Ver2AIzXZBqnYrbbe6k1rudru6VV+QSQxxcezIduAg6n+/sZ2E
+        QG+h1A/30pcWzMznz+OZ8cyUAU2C0TDsDS+jQXQecJGQiVkK7r7crMbsDxbfDjf457dlzBfR3dN1
+        dL/5sbn/6+oqAGGcEZDM1zoVvJOIWHVmEtZnBWOTnR/RC5lc0iXWoD7DTJHzQKw4kcGoDJiYU96g
+        Apph04/CaPixv8dvPV4M14/h1wL/zNPkli2nTzf9u6cf0fjLjeGHYQcsJ4VkgJdqnasRQm5RDbpz
+        qtNiWigiY8E14bobiwwVqNrr0/LqAjDmskKxRoGFPbScVkBOG9BUdViQTXXG9rZ3u1phZxNjL8GY
+        WIHmPtVfg6NGp9GnfH6yPuiUSOiUgJWA+rM5MFX6FCJWvkTmHziOQVBgdEmSE8hUGkDFeMFziSTJ
+        hYUqpiqWNNdU8FNI7egBjpBzzOkGn4oDegrUDZ1TtrfyoEeW4FanKDqFEtnoiNfGBJLEhC7BnCeD
+        7WkCll7nJmDHLWsYI1NNJjjJTNjZaHx+nee+DOqENLcF23yVhMfpmZaYK2ZNfyZmZ+BsZ3/ajHEG
+        GaPIwEL2ty4wmQm5aDLCwUCzFq4IvORhcI6Y/QAAxBaoA50FWXugGO0Swd8qLGKIcjwVEmtxLNIP
+        kduBKVH7q3EXTXDmQdqqA0wqhI8FrTrAUKUK8irPPXRki6JQHRy8yKYuV70mJA4BO33giZWic06I
+        h+UaiBLVqXQKnh+nPqA1QoncJ3vDeO5B02gDyJSJqQcKvGLIQpRIpdg9G3rix8xgGoQdSElmnjQN
+        QgOppdcdW4oGogGEl0vDdXtwrBFQWVmSYT4v8NwHs4GAmzZv6xxvjlYXh+JkiwGAplqSdFr4prEt
+        imHpHnqIax9TbkG2kLZ2OFyLHDx6qwKxh88yeuxJP4RXAew4uTeo8ct9YPP9ePVxjKpBKNE247qE
+        XmG/3apVRq85tneoinEPN6gRUPlbjnVqshNslGNJ3k64AkDlFEN91O12y5RgW+1mRHrFqtMHICzj
+        FAq9t3MsawSoXzKsbRk9MxQTKKuZwImHTRsIgHOX93aeTr995zk0jB7krHobL6OMKC24Tw7dYrSR
+        udB0RuPXNBKHQmsHpvykKI/JOWbsHLxU05iC30JrZu4OSkbiYxunD0eAXt21E4yAC3tYWxKHUCLX
+        7iUkZ2LtmWtaICZcJYHZQDLBGtqIsNe/7PSiThg+hL3RRW8UfXwEmSJP2jJhr9MPOz2QCUcX0aj/
+        wcjkhUq3MPsioRGB1Fl5MnyC8cCL/nyvuzDdPqgplW7VPm+VRq6p/2+lmIFL7sXNa/db7r9hxxSB
+        ZCoykkMl0Zp+mCFN13HsQnOLZhKZ09ANCA2iy/5wp2CIRcHhCgbh4DxYYQ21LDzP7cW60IAd7vCC
+        zCDuzL5YTVyQByMtC5jumJVciicSa9Ve26aVluCKLuiOoimGmrbQ9XYViXAAM6GMSimqMQ+HVNCk
+        UpjYVNOlhCo8ZWS7IHLCK471gS7gkIzGhCuwRWmaPziVnY3Akapp1rj6qvLkHzcmux9ff/9+8+3h
+        9/G9cUozanIc2pO0+MPDLXt6/DvaPD5cXwXQX7sWc2T5t7gEI8OiNnVl+YTMcMH0xLUAQGrQHcJe
+        mmT5xLmUFgsCzbvbuD3reB+o7c7+3gdq7wO1/2egxolewVipTjY28NtNT51V+8//Ai3REYOTFwAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '1311'
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:2875D:2FB9A:5FC82B30
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '41'
+      X-Ratelimit-Reset:
+      - '1606956084'
+      X-Ratelimit-Used:
+      - '19'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:52 GMT
+      etag:
+      - W/"9e02fd03eae9d2ce72c01c9f638d547770935465dea774a32344465e03780223"
+      last-modified:
+      - Wed, 02 Dec 2020 22:45:16 GMT
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/pulls/1489
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Accept-Ranges:
+      - bytes
+      Transfer-Encoding:
+      - chunked
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:2875E:2FB9C:5FC82B30
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '40'
+      X-Ratelimit-Reset:
+      - '1606956084'
+      X-Ratelimit-Used:
+      - '20'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:56 GMT
+      etag:
+      - W/"45e0017e59e5ea5e46a883186bb761f45df89decdeea51c44a277db43d40d3c3"
+      last-modified:
+      - Wed, 02 Dec 2020 20:00:33 GMT
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/issues/1489/labels
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA62PS2rDMBCGryIE3jnxO6m9CzQuXbgvVAotpcj22BbIkpFkQlpyjW676QFzhCqm
+        z0276YAYNHzzD9/dE2Y1zsIkSoM4DYLIxULW8HAY4uL4ekFOcnZ7s9mekSIpyKV960fs4lFxC3TG
+        DDrzPDqwectMN5bzSvaegkFqb9iaTor3NqtlpWeN8jgtgWuPMMPBCX0BUGvbG6l6agwT7dymC9qD
+        jZ8gNCHoJ1BJLpUl1lPZjRoaOnKDs4ZyDYe/rhQbDJMCZ2LkfOd+mh4F4TL1k19M44KcRudkFfyD
+        qZP7Tpo7q9hJF1aUjkb2oFr40ty/vD6j7/MPO99flMvkLztMOkAXV2jDOEclTEloOlHj3f0b8Hi4
+        /eEBAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '290'
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:28764:2FBA2:5FC82B30
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Reset:
+      - '1606956084'
+      X-Ratelimit-Used:
+      - '21'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:57 GMT
+      etag:
+      - W/"7ab2efb7fbbdea4c8f1b2a8d8a5adca9d164f850facd3d8eecf2a4eb6deb4211"
+      last-modified:
+      - Wed, 02 Dec 2020 20:00:33 GMT
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/pulls/1489/reviews
+  response:
+    body:
+      string: '[]'
+    headers:
+      Accept-Ranges:
+      - bytes
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:28766:2FBA4:5FC82B31
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '38'
+      X-Ratelimit-Reset:
+      - '1606956085'
+      X-Ratelimit-Used:
+      - '22'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-length:
+      - '2'
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:57 GMT
+      etag:
+      - '"992aaf92b487506974e4305db4a64326866f3ed48b2ba424cef8fbe4e28f72b0"'
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/pulls/1489/commits
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA61XaVfqSBD9Kxy+umQli+c584ICgiZsUYHHHE8n6SSNIYnpLIDH/z7dLIqOzzH6
+        +AJ0+t6qrqpb1fn1WMU+qJ5UaxaoQZEDNhAFQWRllqtxUk11RJeHAscplqRYnMha1cNqGDnwDjkE
+        pJ+PpT6vptZtwHbNdtE1bU5fXUvGbcc3bq9Z/bY5G5v9lb7qF8ZKWxhmgzfM4N5ojZcTU1/opo+M
+        mY90s1+MvdNTQm5H8zlKqyePVZClfpTQXyGYQ2KtkwUQV64ADiHZCOcABWR1RlePA7r606Nrx4SC
+        PHdASkE8y7NHHHfEqyYnnwjCCS9Nqk87OyncN9BC6UVGT7jjDqMExsHyp4dSP7M+RzyHGAOPmr6O
+        qQ8VOwpTGKb4OI4IdZpA8mwXdY6VVEtkBc5yXNdyHIVXeZaVedXiBUsFwIVAFS3JJsAsoaf10zTG
+        JwwDYnT84hVD3IwwEy9JxMLt15ET2fjITRiyjaFWMfNpayQ+3zK3SSJmShQVhZAo3dlRFpL0s4fV
+        HCbIRTZIURTSiG3+Q1J3aZLBw2oCAaZPqjkISDUeVjHyQpBmCY39Ef3UG622Uem1epVhu2Vo5vWg
+        sV6fhtOwwHW7rmn1M03r1/sdt1DT+dmgfin7M7GbC0m70DTnot3WNK0zXuqdbDnK6jk7mUx4NZax
+        Pg1XnVU+4HooxDeqNZwVAyjAe3G1nGPGnRuL3B91i8V97GcH3Fi+Cg1pAPie6YiokFsPTtudhlY8
+        WZi8qA3dxoLp11a+XggDfXBl6U3gDyfBpVqo7dWVouBh27MirRfMguEIic2Zd690a3AaQiGbdJai
+        7aNLN1qaDx2Uz+Pi/MZui3lTcTDEfF1v3MpScXHTHLmDjL/yGWaYjWZn0EoPBuQUwmWkWM3BuCdA
+        ZHdn+oM6mo/aUSYWoM2OucRVmoxj2Ywv84xcy5b+CNSaYtT3bg6gNsqmoSmI6XzUXQp9rE16Y72l
+        qBdxPlgg0ZM48yxbtAy/ncc+ql0+WPpiCHl1fJ1MhqA/41oX3uk0PGXUB5KSdW4axvm7GSP5jcEy
+        iADtO7ScK5+t5mkYg4SUVkXmRVWwXEWFrFvjeVfiHGDXeEuSWJV3hJrkAOjIvDUNN62nstdwKj/e
+        7TN/VTiJlSSZ41mpcsByLDsNN8VPOktl008qP/7bRt7DTcN3GsbTd6T4BRn66Ty4e639vTbzfoPZ
+        mPmC2PEbSyWaWtmjMdv+gkkdvQyWIPIQ7SBDGGQzWSHP6FgTJZETOPn1oOtLNyMjsGd93jhvrHTT
+        psMK5CAFydtTrBcxu+3PGYbJdgTQAcJkzJb/7/xUJBxesmVZT9T/a/SUDTMv/n6cr5d9bhQEUUGw
+        b519PUde0TPPIOLV5jcKvfIEBPTIRKkPSaSI+0/00AinpVxZAx7JLMMpuXpQCkyCnECnjDtbCHGm
+        CIkfj+uxuebKLGwnKKajppRbr4CEKEo8EKLVemaVIiJAWprrOV7mSGsAAcKcXjHKIDeIRyZOUA7s
+        JQ1DAm2IchLT8mxvoIQsXcbrSxDJOI0wSuEdcOZUbi4IMHx7BdtJsYDWkUtKlWCoIDhVkURR/I0Y
+        G7Xu+Zg1zvsC2f6RGIXfinFn4Btq3HP5YznubSylxx3u64J8w/AdRT5TfUuSzyx/TpMvlPtq/ooo
+        n5nKqvIZWF6Wz9A/o8s9T15p+lPC3NyXcPXk1+495bNXJ0L/5ReH3UgvYetjuX14W/m0lad/nv75
+        FwqlXnwmDwAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Transfer-Encoding:
+      - chunked
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:28768:2FBA7:5FC82B31
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '37'
+      X-Ratelimit-Reset:
+      - '1606956085'
+      X-Ratelimit-Used:
+      - '23'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:57 GMT
+      etag:
+      - W/"53991df3991691f037db7bb2ba6b501beee4b7c2b37e98eac769baefcc5761c2"
+      last-modified:
+      - Wed, 02 Dec 2020 20:00:33 GMT
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/commits/5ba5e41aca4334070151659d4f2e3118b68b140b/check-suites
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Accept-Ranges:
+      - bytes
+      Transfer-Encoding:
+      - chunked
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:28769:2FBA8:5FC82B31
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '36'
+      X-Ratelimit-Reset:
+      - '1606956085'
+      X-Ratelimit-Used:
+      - '24'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:57 GMT
+      etag:
+      - W/"2bbea202d30d7c0041a456bfd47011ac9b78d5ab22d94b5cc6e7031650b70062"
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - PyGithub/Python
+    method: GET
+    uri: https://api.github.com/repos/python/python-docs-fr/issues/1489/labels
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA62PS2rDMBCGryIE3jnxO6m9CzQuXbgvVAotpcj22BbIkpFkQlpyjW676QFzhCqm
+        z0276YAYNHzzD9/dE2Y1zsIkSoM4DYLIxULW8HAY4uL4ekFOcnZ7s9mekSIpyKV960fs4lFxC3TG
+        DDrzPDqwectMN5bzSvaegkFqb9iaTor3NqtlpWeN8jgtgWuPMMPBCX0BUGvbG6l6agwT7dymC9qD
+        jZ8gNCHoJ1BJLpUl1lPZjRoaOnKDs4ZyDYe/rhQbDJMCZ2LkfOd+mh4F4TL1k19M44KcRudkFfyD
+        qZP7Tpo7q9hJF1aUjkb2oFr40ty/vD6j7/MPO99flMvkLztMOkAXV2jDOEclTEloOlHj3f0b8Hi4
+        /eEBAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '290'
+      X-GitHub-Request-Id:
+      - C4AC:F7DC:2876B:2FBAA:5FC82B31
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '35'
+      X-Ratelimit-Reset:
+      - '1606956084'
+      X-Ratelimit-Used:
+      - '25'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      cache-control:
+      - public, max-age=60, s-maxage=60
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Dec 2020 00:02:57 GMT
+      etag:
+      - W/"7ab2efb7fbbdea4c8f1b2a8d8a5adca9d164f850facd3d8eecf2a4eb6deb4211"
+      last-modified:
+      - Wed, 02 Dec 2020 20:00:33 GMT
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - GitHub.com
+      status:
+      - 200 OK
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      vary:
+      - Accept, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-media-type:
+      - github.v3; format=json
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
