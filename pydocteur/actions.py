@@ -86,7 +86,6 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     logger.debug(f"PR #{pr.number}: Sleeping one second")
     time.sleep(1)
 
-    # TODO: Custom commit message/title with nice infos and saying it's auto merged.
     title, message = get_title_message_for_merge(pr)
     pr.merge(merge_method="squash", commit_title=title, commit_message=message)
     logger.info(f"PR #{pr.number}: Merged.")
