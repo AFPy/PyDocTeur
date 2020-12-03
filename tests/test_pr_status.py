@@ -20,17 +20,10 @@ def test_is_pr_approved(pr_number, approved):
 
 
 @pytest.mark.vcr()
-def test_is_pr_tests_failed():
+@pytest.mark.parametrize("pr_number, success", [(1487, False), (1485, True), (1434, False), (1496, True)])
+def test_is_pr_tests_passed(pr_number, success):
     gh = Github()
-    pr = gh.get_repo("python/python-docs-fr").get_pull(1487)
-    assert not is_pr_tests_passed(pr)
-
-
-@pytest.mark.vcr()
-def test_is_pr_tests_success():
-    gh = Github()
-    pr = gh.get_repo(REPOSITORY_NAME).get_pull(1485)
-    assert is_pr_tests_passed(pr)
+    assert is_pr_tests_passed(gh.get_repo(REPOSITORY_NAME).get_pull(pr_number)) is success
 
 
 @pytest.mark.vcr()
