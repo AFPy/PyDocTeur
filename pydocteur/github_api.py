@@ -1,4 +1,5 @@
 import logging
+import re
 
 import requests
 from github import Github
@@ -59,3 +60,37 @@ def has_pr_number(payload) -> bool:
         return False
     else:
         return True
+
+
+def get_coauthors(pr) -> set:
+    co_authored = set()
+    compiled_regex = re.compile("(Co-authored-by:.*)")
+    for commit in pr.get_commits():
+        commit_message = commit.commit.message
+        matches = compiled_regex.findall(commit_message)
+        if matches:
+            for item in matches:
+                co_authored.add(item)
+    return co_authored
+
+
+def get_issues_to_close(body):
+    return re.findall(r"(?:close[sd]?|fix|fixe[sd]|resolve[sd]?)\s+(#\d+)", body or "", flags=re.IGNORECASE)
+
+
+def get_commit_message_for_merge(pr):
+    logger.info(f"Generating title and message for merge of PR #{pr.number}")
+    co_authors = get_coauthors(pr)
+    closing_issues = get_issues_to_close(pr.body)
+
+    fixes = "Closes ".join(closing_issues)
+    coauthors = "\n".join(co_authors)
+
+    message = "Automerge of PR #{pr_number} by @{author}".format(pr_number=pr.number, author=pr.user.login)
+    if fixes:
+        message = message + "\n{fixes}".format(fixes=fixes)
+    if pr.body:
+        message = message + "\n\n{body}".format(body=pr.body)
+    if coauthors:
+        message = message + "\n\n{coauthors}".format(coauthors=coauthors)
+    return message
