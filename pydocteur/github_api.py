@@ -21,6 +21,7 @@ def get_pr_from_sha(commit_sha):
     prs_for_commit = gh.search_issues(f"type:pr repo:{REPOSITORY_NAME} sha:{commit_sha}")
     if prs_for_commit.totalCount != 1:
         logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
+        return None
     return gh.get_repo(REPOSITORY_NAME).get_pull(prs_for_commit[0].number)
 
 
