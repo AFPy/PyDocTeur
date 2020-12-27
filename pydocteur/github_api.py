@@ -29,6 +29,8 @@ def get_pull_request(payload):
     logger.info("Trying to find PR from %s", payload.get("action", "A payload with: " + ", ".join(payload.keys())))
 
     head_sha = payload.get("check_suite", {}).get("head_sha")
+    if not head_sha:
+        head_sha = payload.get("check_run", {}).get("head_sha")
     if head_sha:
         return get_pull_request_from_checks(head_sha)
 
