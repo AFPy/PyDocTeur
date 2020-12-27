@@ -123,3 +123,11 @@ def maybe_greet_user(pr: PullRequest):
         body = replace_body_variables(pr, body)
         logger.info(f"PR #{pr.number}: Greeting {pr.user.login}")
         pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
+
+
+def comment_about_title(pr: PullRequest):
+    bodies = get_comment_bodies("incorrect_title")
+    body = random.choice(bodies)
+    body = replace_body_variables(pr, body)
+    logger.info(f"PR #{pr.number}: Sending incorrect title message")
+    pr.create_issue_comment(body + END_OF_BODY.format(state="incorrect_title", version=VERSION))
