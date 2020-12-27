@@ -54,6 +54,7 @@ def replace_body_variables(pr: PullRequest, body: str):
     reviewers_login.discard(author)
     reviewers = ", @".join(reviewers_login)
     new_body = new_body.replace("@$REVIEWERS", "@" + reviewers)
+    new_body = new_body.replace("@$MERGEABLE_STATE", pr.mergeable_state)
     return new_body
 
 
@@ -82,9 +83,17 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     contributor_usernames = [u.login for u in repo.get_collaborators()]
     reviewer_usernames = [i.user.login for i in pr.get_reviews()]
     if not any(x in reviewer_usernames for x in contributor_usernames):
-        logging.info("PR not reviewed by a contributor, not merginf.")
+        logging.info("PR not reviewed by a contributor, not merging.")
         return
 
+    logger.info(f"Testing if PR #{pr.number} can be merged")
+    if not pr.mergeable or pr.mergeable_state != "clean":
+        logger.warning(f"PR #{pr.number} cannot be merged. mergeable_state={pr.mergeable_state}")
+        unmergeable_comments = get_comment_bodies("unmergeable")
+        body = random.choice(unmergeable_comments)
+        body = replace_body_variables(pr, body)
+        pr.create_issue_comment(body + END_OF_BODY.format(state=state, version=VERSION))
+        return
     logger.info(f"PR #{pr.number}: About to merge")
     warnings = get_comment_bodies("automerge_approved_testok")
     thanks = get_comment_bodies("automerge_approved_testok-done")
