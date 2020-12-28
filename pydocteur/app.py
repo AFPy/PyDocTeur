@@ -11,6 +11,7 @@ from pydocteur.actions import merge_and_thank_contributors
 from pydocteur.github_api import get_pull_request
 from pydocteur.github_api import has_pr_number
 from pydocteur.pr_status import get_pr_state
+from pydocteur.review_pr import review_pr
 from pydocteur.settings import VERSION
 
 application = Flask(__name__)
@@ -26,7 +27,7 @@ logger.info("************************************************************")
 def process_incoming_payload():
 
     if request.method == "GET":
-        return (jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}), 200)
+        return jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}), 200
 
     payload = json.loads(request.data)
 
@@ -55,6 +56,9 @@ def process_incoming_payload():
         return "OK", 200
     state = get_pr_state(pr)
     logger.info(f"State of PR #{pr.number} is {state}")
+
+    logger.info(f"Reviewing PR #{pr.number}")
+    review_pr(pr)
 
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
