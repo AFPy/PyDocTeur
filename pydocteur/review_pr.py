@@ -1,16 +1,15 @@
 import re
 
-from github import Commit
 from github import File
 from github import PullRequest
 
+from pydocteur.actions import replace_body_variables
 from pydocteur.settings import VERSION
 
-BODY = """
+REVIEW_BODY = """
 
-```suggestion
-{new_line}
-```
+Hello @$AUTHOR, j'ai trouvé automatiquement quelques changements à faire dans ta PR
+Il t'es parfaitement possible de les ignorer car je peux faire des erreurs ! Merci de ta contribution.
 
 ---
 <details>
@@ -32,28 +31,46 @@ time. I might say or do dumb things sometimes. Don't blame me, blame the develop
 """
 
 
-def find_extraneous_nb_spaces(pr: PullRequest, line: str, last_commit: Commit, file: File, index: int):
+CHANGE_BODY = """
+
+```suggestion
+{new_line}
+```
+"""
+
+
+def find_extraneous_nb_spaces(line: str, file: File, index: int):
+    comments = []
     for error_match in re.finditer(r"\xa0(?![?!;:])", line):
         error_start, error_end = error_match.span()
         line = line[:error_start] + " " + line[error_end:]
-        body = BODY.format(new_line=line, version=VERSION)
-        pr.create_review_comment(
-            "Il y a un espace insécable en trop ici :\n\n" + body, last_commit, file.filename, index
+        body = CHANGE_BODY.format(new_line=line, version=VERSION)
+
+        comments.append(
+            {"path": file.filename, "body": "Il y a une espace insécable en trop ici :\n\n" + body, "position": index}
         )
+    return comments
 
 
-def find_missing_nb_spaces(pr: PullRequest, line: str, last_commit: Commit, file: File, index: int):
+def find_missing_nb_spaces(line: str, file: File, index: int):
+    comments = []
     for error_match in re.finditer(r" [?!;:]", line):
         error_start, error_end = error_match.span()
         line = line[:error_start] + "\xa0" + line[error_start + 1 :]  # noqa
-        body = BODY.format(new_line=line, version=VERSION)
-        pr.create_review_comment("Il manque un espace insécable ici :\n\n" + body, last_commit, file.filename, index)
+        body = CHANGE_BODY.format(new_line=line, version=VERSION)
+
+        comments.append(
+            {"path": file.filename, "body": "Il manque une espace insécable ici :\n\n" + body, "position": index}
+        )
+    return comments
 
 
 def review_pr(pr: PullRequest):
     last_commit = [commit for commit in pr.get_commits()][-1]
 
     positions_to_ignore = [comment.position for comment in pr.get_review_comments()]
+
+    comments = []
 
     for file in pr.get_files():
         patch = file.patch
@@ -71,15 +88,17 @@ def review_pr(pr: PullRequest):
             line = line[1:]
 
             if line.startswith("msgid"):
-                body = BODY.format(new_line=line, version=VERSION)
-                pr.create_review_comment(
-                    "Merci de ne pas modifier les lignes `msgid`.\n"
-                    "Si tu a trouvé une erreur dans la documentation originale, "
-                    "fait une pull request dans CPython.\n\n" + body,
-                    last_commit,
-                    file.filename,
-                    index,
+                body = CHANGE_BODY.format(new_line=line, version=VERSION)
+                comments.append(
+                    {
+                        "path": file.filename,
+                        "body": "Merci de ne pas modifier les lignes `msgid`.\n"
+                        "Si tu a trouvé une erreur dans la documentation originale, "
+                        "fait une pull request dans CPython.\n\n" + body,
+                        "position": index,
+                    }
                 )
-
-            find_extraneous_nb_spaces(pr, line, last_commit, file, index)
-            find_missing_nb_spaces(pr, line, last_commit, file, index)
+            comments.extend(find_extraneous_nb_spaces(line, file, index))
+            comments.extend(find_missing_nb_spaces(line, file, index))
+    body = replace_body_variables(pr, REVIEW_BODY.format(version=VERSION))
+    pr.create_review(commit=last_commit, body=body, event="REQUEST_CHANGES", comments=comments)
