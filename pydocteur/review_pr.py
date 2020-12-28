@@ -8,12 +8,12 @@ from pydocteur.settings import VERSION
 
 REVIEW_BODY = """
 
-Hello @$AUTHOR, j'ai trouvé automatiquement quelques changements à faire dans ta PR
-Il t'es parfaitement possible de les ignorer car je peux faire des erreurs ! Merci de ta contribution.
+Hello @$AUTHOR, j'ai trouvé automatiquement quelques changements à faire dans ta PR.
+Il t'est parfaitement possible de les ignorer car je peux faire des erreurs ! Merci de ta contribution.
 
 ---
 <details>
-  <summary>Disclaimer</summary>
+  <summary>Avertissement</summary>
 
 Je suis un robot fait par l'équipe de [l'AFPy et de Traduction](https://github.com/AFPy/PyDocTeur/graphs/contributors)
 sur leur temps libre. Je risque de dire des bétises. Ne me blâmez pas, blamez les développeurs.
@@ -98,7 +98,7 @@ def review_pr(pr: PullRequest):
                         "path": file.filename,
                         "body": "Merci de ne pas modifier les lignes `msgid`.\n"
                         "Si tu a trouvé une erreur dans la documentation originale, "
-                        "fait une pull request dans CPython.\n\n" + body,
+                        "fais une pull request dans CPython.\n\n" + body,
                         "position": index,
                     }
                 )
