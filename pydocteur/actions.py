@@ -22,7 +22,7 @@ END_OF_BODY = """
 
 ---
 <details>
-  <summary>Disclaimer</summary>
+  <summary>Avertissement</summary>
 
 Je suis un robot fait par l'équipe de [l'AFPy et de Traduction](https://github.com/AFPy/PyDocTeur/graphs/contributors)
 sur leur temps libre. Je risque de dire des bétises. Ne me blâmez pas, blamez les développeurs.
