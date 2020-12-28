@@ -47,10 +47,12 @@ def find_extraneous_nb_spaces(line: str, file: File, index: int):
     for error_match in re.finditer(r"\xa0(?![?!;:])", line):
         error_start, error_end = error_match.span()
         line = line[:error_start] + " " + line[error_end:]
-        body = CHANGE_BODY.format(new_line=line, version=VERSION)
-
         comments.append(
-            {"path": file.filename, "body": "Il y a une espace insécable en trop ici :\n\n" + body, "position": index}
+            {
+                "path": file.filename,
+                "body": "Il y a une espace insécable en trop ici :\n\n" + CHANGE_BODY,
+                "position": index,
+            }
         )
     return comments
 
@@ -60,10 +62,9 @@ def find_missing_nb_spaces(line: str, file: File, index: int):
     for error_match in re.finditer(r" [?!;:]", line):
         error_start, error_end = error_match.span()
         line = line[:error_start] + "\xa0" + line[error_start + 1 :]  # noqa
-        body = CHANGE_BODY.format(new_line=line, version=VERSION)
 
         comments.append(
-            {"path": file.filename, "body": "Il manque une espace insécable ici :\n\n" + body, "position": index}
+            {"path": file.filename, "body": "Il manque une espace insécable ici :\n\n" + CHANGE_BODY, "position": index}
         )
     return comments
 
