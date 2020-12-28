@@ -39,6 +39,9 @@ CHANGE_BODY = """
 """
 
 
+# TODO : Do all changes for a line inside a single suggestion
+
+
 def find_extraneous_nb_spaces(line: str, file: File, index: int):
     comments = []
     for error_match in re.finditer(r"\xa0(?![?!;:])", line):
