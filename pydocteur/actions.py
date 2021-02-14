@@ -5,12 +5,15 @@ import random
 import time
 from functools import lru_cache
 
+from github import Github
 from github import PullRequest
 
 from pydocteur.github_api import get_commit_message_for_merge
 from pydocteur.github_api import get_trad_team_members
 from pydocteur.pr_status import is_already_greeted
 from pydocteur.pr_status import is_first_time_contributor
+from pydocteur.settings import GH_TOKEN
+from pydocteur.settings import REPOSITORY_NAME
 from pydocteur.settings import VERSION
 
 logger = logging.getLogger("pydocteur")
@@ -74,6 +77,14 @@ def comment_pr(pr: PullRequest, state: str):
 
 
 def merge_and_thank_contributors(pr: PullRequest, state: str):
+    gh = Github(GH_TOKEN if GH_TOKEN else None)
+    repo = gh.get_repo(REPOSITORY_NAME)
+    contributor_usernames = [u.login for u in repo.get_collaborators()]
+    reviewer_usernames = [i.user.login for i in pr.get_reviews()]
+    if not any(x in reviewer_usernames for x in contributor_usernames):
+        logging.info("PR not reviewed by a contributor, not merginf.")
+        return
+
     logger.info(f"PR #{pr.number}: About to merge")
     warnings = get_comment_bodies("automerge_approved_testok")
     thanks = get_comment_bodies("automerge_approved_testok-done")
