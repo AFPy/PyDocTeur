@@ -20,9 +20,9 @@ from pydocteur.github_api import get_pull_request
         ("labeled2.json", True),
         ("pr_unassigned.json", True),
         ("pydocteur_sender.json", True),
-        ("refs_update.json", False),
+        ("refs_update.json", True),
         ("refs_update2.json", False),
-        ("refs_update3.json", False),
+        ("refs_update3.json", True),
         ("review_edited.json", True),
         ("review_edited2.json", True),
         ("review_requested.json", True),
@@ -33,7 +33,7 @@ from pydocteur.github_api import get_pull_request
         ("unlabeled2.json", True),
     ],
 )
-def test_get_issues_to_close(payload_filename, is_success):
+def test_get_pr_from_payload(payload_filename, is_success):
     with open("tests/payloads/" + payload_filename) as handle:
         payload = json.load(handle)
     if get_pull_request(payload):

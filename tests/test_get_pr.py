@@ -1,6 +1,6 @@
 import pytest
 
-from pydocteur.github_api import get_pull_request_from_checks
+from pydocteur.github_api import get_pr_from_sha
 
 
 @pytest.mark.vcr()
@@ -14,4 +14,4 @@ from pydocteur.github_api import get_pull_request_from_checks
     ],
 )
 def test_get_pr_from_checks(sha, pr_number):
-    assert get_pull_request_from_checks(sha).number == pr_number
+    assert get_pr_from_sha(sha).number == pr_number
