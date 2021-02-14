@@ -16,7 +16,6 @@
   "automerge_donotmerge": [
     "`DO NOT MERGE` ou `automerge` ? Je sais pas quoi faire là !",
     "Décidez-vous les gars, `DO NOT MERGE` ou `automerge` ?"
-
   ],
   "automerge_approved": [
     "Dès que les tests passent, je merge ! Merci @$AUTHOR @$REVIEWERS !",
@@ -34,5 +33,12 @@
   ],
   "greetings": [
     "Hello @$AUTHOR ! Bienvenue dans le monde merveilleux de la traduction de la documentation de Python !\nJe suis PyDocTeur, le robot amical qui s'occupe d'automatiser certaines tâches.\nSi tu as des questions, n'hésite pas à ping @JulienPalard ou @Seluj78"
+  ],
+  "unmergeable": [
+    "Ping @$AUTHOR & @$REVIEWERS !\nIl m'est actuellement impossible de merge cette pull request.\n\nL'état actuel de merge la PR est `@$MERGEABLE_STATE`.\n\nMerci de rebase ou de résoudre les conflits !"
+  ],
+  "incorrect_title":
+  [
+    "Hello @$AUTHOR ! Désolé, mais ton titre de pull request me semble invalide par rapport à ce que je suis programmé d'accepter.\nMerci de le corriger ou d'ajouter le label `meta` si c'est une PR spéciale."
   ]
 }

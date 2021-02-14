@@ -5,12 +5,14 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
+from pydocteur.actions import comment_about_title
 from pydocteur.actions import comment_pr
 from pydocteur.actions import maybe_greet_user
 from pydocteur.actions import merge_and_thank_contributors
 from pydocteur.github_api import get_pull_request
 from pydocteur.github_api import has_pr_number
 from pydocteur.pr_status import get_pr_state
+from pydocteur.pr_status import is_title_ok
 from pydocteur.settings import VERSION
 
 application = Flask(__name__)
@@ -59,6 +61,11 @@ def process_incoming_payload():
     my_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login == "PyDocTeur"]
     if my_comments and f"(state: {state})" in my_comments[-1]:
         logger.info(f"State of PR #{pr.number} hasn't changed, ignoring. (state: {state})")
+        return "OK", 200
+
+    if not is_title_ok(pr):
+        logging.info(f"Title of PR #{pr.number} is incorrect, sending message")
+        comment_about_title(pr)
         return "OK", 200
 
     state_dict = {
