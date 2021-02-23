@@ -89,7 +89,7 @@ def is_title_ok(pr):
     if is_label_set(pr, "meta"):
         return True
     if pr.title.startswith(("traduction de", "Traduction de", "Fix fuzzies in", "Fix fuzzies dans")) or re.findall(
-        r"\\.po", pr.title
+        r"\.po", pr.title
     ):
         return True
     else:
