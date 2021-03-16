@@ -13,7 +13,7 @@ def is_pr_tests_passed(pr):
     last_commit = [commit for commit in pr.get_commits()][-1]
     check_suites = [suite for suite in last_commit.get_check_suites() if suite.app.name == "GitHub Actions"]
     if len(check_suites) == 0:
-        logging.info(f"PR #{pr.number} has no tests.")
+        logger.info(f"PR #{pr.number} has no tests.")
         return False
     statuses = [suite.status for suite in check_suites]
     conclusions = [suite.conclusion for suite in check_suites]
