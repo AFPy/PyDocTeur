@@ -37,8 +37,7 @@
   "unmergeable": [
     "Ping @$AUTHOR & @$REVIEWERS !\nIl m'est actuellement impossible de merge cette pull request.\n\nL'état actuel de merge la PR est `@$MERGEABLE_STATE`.\n\nMerci de rebase ou de résoudre les conflits !"
   ],
-  "incorrect_title":
-  [
-    "Hello @$AUTHOR ! Désolé, mais ton titre de pull request me semble invalide par rapport à ce que je suis programmé d'accepter.\nMerci de le corriger ou d'ajouter le label `meta` si c'est une PR spéciale."
+  "incorrect_title": [
+    "Hello @$AUTHOR ! Désolé, mais ton titre de pull request me semble invalide par rapport à ce que je suis programmé d'accepter.\nMerci de le corriger ou d'ajouter le label `meta` si c'est une PR spéciale. Un exemple de titre valide serait : « Traduction de dossier/fichier.po »."
   ]
 }
