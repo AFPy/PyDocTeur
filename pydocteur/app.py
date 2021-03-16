@@ -64,7 +64,7 @@ def process_incoming_payload():
         return "OK", 200
 
     if not is_title_ok(pr):
-        logging.info(f"Title of PR #{pr.number} is incorrect, sending message")
+        logger.info(f"Title of PR #{pr.number} is incorrect, sending message")
         comment_about_title(pr)
         return "OK", 200
 

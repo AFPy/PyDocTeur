@@ -83,7 +83,7 @@ def merge_and_thank_contributors(pr: PullRequest, state: str):
     contributor_usernames = [u.login for u in repo.get_collaborators()]
     reviewer_usernames = [i.user.login for i in pr.get_reviews()]
     if not any(x in reviewer_usernames for x in contributor_usernames):
-        logging.info("PR not reviewed by a contributor, not merging.")
+        logger.info("PR not reviewed by a contributor, not merging.")
         return
 
     logger.info(f"Testing if PR #{pr.number} can be merged")
