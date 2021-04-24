@@ -101,3 +101,10 @@ def get_commit_message_for_merge(pr):
     if coauthors:
         message = message + "\n\n{coauthors}".format(coauthors=coauthors)
     return message
+
+
+def rerun_workflow(pr):
+    headers = {"Authorization": "Bearer {}".format(GH_TOKEN)}
+    url = f"https://api.github.com/repos/python/python-docs-fr/actions/workflows/tests.yml/runs?branch={pr.head.ref}"
+    resp = requests.post(url, headers=headers)
+    return True if resp.status_code == 201 else False

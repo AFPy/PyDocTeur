@@ -39,5 +39,9 @@
   ],
   "incorrect_title": [
     "Hello @$AUTHOR ! Désolé, mais ton titre de pull request me semble invalide par rapport à ce que je suis programmé d'accepter.\nMerci de le corriger ou d'ajouter le label `meta` si c'est une PR spéciale. Un exemple de titre valide serait : « Traduction de dossier/fichier.po »."
+  ],
+  "rerun_workflow": [
+    "C'est parti, je relance les tests !",
+    "Chef oui chef ! Les tests sont relancés."
   ]
 }

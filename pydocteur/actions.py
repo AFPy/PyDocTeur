@@ -125,9 +125,18 @@ def maybe_greet_user(pr: PullRequest):
         pr.create_issue_comment(body + END_OF_BODY.format(state="greetings", version=VERSION))
 
 
+# TODO: Check if changing state for incorrect title may not create a bug where PyDocteur might repeat itself
 def comment_about_title(pr: PullRequest):
     bodies = get_comment_bodies("incorrect_title")
     body = random.choice(bodies)
     body = replace_body_variables(pr, body)
     logger.info(f"PR #{pr.number}: Sending incorrect title message")
     pr.create_issue_comment(body + END_OF_BODY.format(state="incorrect_title", version=VERSION))
+
+
+def comment_about_rerun_workflow(pr: PullRequest):
+    bodies = get_comment_bodies("rerun_workflow")
+    body = random.choice(bodies)
+    body = replace_body_variables(pr, body)
+    logger.info(f"PR #{pr.number}: Sending rerun workflow message")
+    pr.create_issue_comment(body + END_OF_BODY.format(state="rerun_workflow", version=VERSION))
