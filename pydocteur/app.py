@@ -58,7 +58,11 @@ def process_incoming_payload():
         logger.info(f"PR {pr.number}: Received from Action PR Title checker, ignoring")
         return "OK", 200
     state = get_pr_state(pr)
-    logger.info(f"State of PR #{pr.number} is {state}")
+
+    logger.info(f"State of PR #{pr.number} is {state!r}")
+    if not state:
+        logger.info(f"No interesting info yet about PR #{pr.number}.")
+        return "OK", 200
 
     # Check if last comment sent is command
     other_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login != "PyDocTeur"]
