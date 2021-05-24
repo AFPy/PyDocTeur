@@ -62,7 +62,7 @@ def process_incoming_payload():
 
     # Check if last comment sent is command
     other_comments = [comment.body for comment in pr.get_issue_comments() if comment.user.login != "PyDocTeur"]
-    if other_comments[-1] == "@PyDocteur retest this please":
+    if other_comments and other_comments[-1] == "@PyDocteur retest this please":
         rerun_workflow(pr)
         comment_about_rerun_workflow(pr)
 
