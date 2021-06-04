@@ -19,6 +19,9 @@ def get_graphql_api(query: str) -> requests.Response:
 
 def get_pr_from_sha(commit_sha):
     prs_for_commit = gh.search_issues(f"type:pr repo:{REPOSITORY_NAME} sha:{commit_sha}")
+    if prs_for_commit.totalCount == 0:
+        logger.debug("No PR associated with commit %s", commit_sha, prs_for_commit.totalCount)
+        return None
     if prs_for_commit.totalCount != 1:
         logger.error("Should be exactly one PR for this sha: %s, found %s", commit_sha, prs_for_commit.totalCount)
         return None
