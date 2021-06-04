@@ -13,6 +13,17 @@ PyDocTeur will use the following environment (and `.env` file) variables:
 - `LOGGING` (optional): logging dict-config as a yaml file, see below.
 
 
+## Github WebHook Configuration
+
+You'll need to setup a github webhook using the `application/json` content type, sending:
+
+- Check suites
+- Pull request review comments
+- Pull request reviews
+- Pull requests
+- Pushes
+
+
 ## Logging
 
 PyDocTeur use the `pydocteur` logger, and used libs use the following
