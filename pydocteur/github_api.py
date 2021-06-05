@@ -36,18 +36,26 @@ def get_pull_request(payload):
     if not head_sha:
         head_sha = payload.get("check_run", {}).get("head_sha")
     if head_sha:
+        logger.debug(f"Found from head_sha {head_sha}.")
         return get_pr_from_sha(head_sha)
 
     pr_number = payload.get("pull_request", {}).get("number")
     if pr_number:
+        logger.debug(f"Found from pull request number {pr_number}.")
         return gh_repo.get_pull(pr_number)
 
     issue_number = payload.get("issue", {}).get("number")
     if issue_number:
-        return gh_repo.get_pull(issue_number)
-
+        logger.debug("Trying to find PR from issue number %s", issue_number)
+        try:
+            pull_request = gh_repo.get_pull(issue_number)
+            logger.debug(f"Found from issue number {issue_number}.")
+            return pull_request
+        except gh.GithubException:
+            pass
     sha = payload.get("before")
     if sha:
+        logger.debug(f"Found from `before` sha {sha}.")
         return get_pr_from_sha(sha)
 
     logger.warning("Unknown payload, (action: %s)", payload.get("action", ""))
