@@ -22,6 +22,7 @@ You'll need to setup a github webhook using the `application/json` content type,
 - Pull request reviews
 - Pull requests
 - Pushes
+- Issue comments (which in fact also contains pull request comments)
 
 
 ## Logging
