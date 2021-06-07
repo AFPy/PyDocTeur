@@ -2,7 +2,7 @@ import logging
 import re
 
 import requests
-from github import Github
+from github import Github, GithubException
 
 from pydocteur.settings import GH_TOKEN
 from pydocteur.settings import REPOSITORY_NAME
@@ -51,7 +51,7 @@ def get_pull_request(payload):
             pull_request = gh_repo.get_pull(issue_number)
             logger.debug(f"Found from issue number {issue_number}.")
             return pull_request
-        except gh.GithubException:
+        except GithubException:
             pass
     sha = payload.get("before")
     if sha:
