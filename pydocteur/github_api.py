@@ -44,8 +44,9 @@ def get_pull_request(payload):
         logger.debug(f"Found from pull request number {pr_number}.")
         return gh_repo.get_pull(pr_number)
 
-    issue_number = payload.get("issue", {}).get("number")
-    if issue_number:
+    issue = payload.get("issue", {})
+    issue_number = issue.get("number")
+    if issue_number and issue.get("pull_request"):
         logger.debug("Trying to find PR from issue number %s", issue_number)
         try:
             pull_request = gh_repo.get_pull(issue_number)
@@ -58,7 +59,7 @@ def get_pull_request(payload):
         logger.debug(f"Found from `before` sha {sha}.")
         return get_pr_from_sha(sha)
 
-    logger.warning("Unknown payload, (action: %s)", payload.get("action", ""))
+    logger.debug("Payload (action: %s) is not from a PR.", payload.get("action", "(no action)"))
     return None
 
 
