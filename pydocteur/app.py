@@ -31,8 +31,10 @@ def process_incoming_payload():
 
     if request.method == "GET":
         return (jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}), 200)
-
-    payload = json.loads(request.data)
+    try:
+        payload = json.loads(request.data)
+    except json.JSONDecodeError:
+        return "Not a JSON body", 400
 
     if payload["sender"]["login"] == "PyDocTeur":
         logger.info("Received payload sent from PyDocTeur user, ignoring.")
