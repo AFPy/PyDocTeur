@@ -29,7 +29,7 @@ logger.info("************************************************************")
 @application.route("/", methods=["POST", "GET"])
 def process_incoming_payload():
 
-    if request.method == "GET":
+    if request.method in ("GET", "HEAD"):
         return (jsonify({"name": "PyDocTeur", "source": "https://github.com/afpy/pydocteur", "version": VERSION}), 200)
     try:
         payload = json.loads(request.data)
