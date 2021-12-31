@@ -20,7 +20,7 @@ jobs:
         chmod 600 ${HOME}/.ssh/id_rsa
         eval $(ssh-agent)
         ssh-add
-        rsync -a ./ pydocteur-afpy-org@deb.afpy.org:/home/pydocteur-afpy-org/src/
-        ssh pydocteur-afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
-        ssh pydocteur-afpy-org@deb.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install -r /home/pydocteur-afpy-org/src/requirements.txt
-        ssh pydocteur-afpy-org@deb.afpy.org systemctl --user restart pydocteur.service
+        rsync -a ./ pydocteur-afpy-org@deb2.afpy.org:/home/pydocteur-afpy-org/src/
+        ssh pydocteur-afpy-org@deb2.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
+        ssh pydocteur-afpy-org@deb2.afpy.org /home/pydocteur-afpy-org/venv/bin/python -m pip install -r /home/pydocteur-afpy-org/src/requirements.txt
+        ssh pydocteur-afpy-org@deb2.afpy.org systemctl --user restart pydocteur.service
